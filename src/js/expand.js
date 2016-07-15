@@ -32,11 +32,14 @@ var expandFunc = function ($, $$) {
 
       if (window.matchMedia) {
         mediaQueryList = window.matchMedia('print');
-        mediaQueryList.addListener(function (mql) {
-          if (mql.matches) {
-            beforePrint();
-          }
-        });
+
+        if (mediaQueryList.addListener) {
+          mediaQueryList.addListener(function (mql) {
+            if (mql.matches) {
+              beforePrint();
+            }
+          });
+        }
       }
 
       window.onbeforeprint = beforePrint;
