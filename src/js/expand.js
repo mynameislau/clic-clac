@@ -1,12 +1,10 @@
+import {queryAll} from './query-all';
+
 var selector = function (selectorString, context) {
   var element = context || document;
   return element.querySelector(selectorString);
 };
 
-var selectorAll = function (selectorString, context) {
-  var element = context || document;
-  return Array.prototype.slice.call(element.querySelectorAll(selectorString));
-};
 
 var expandFunc = function ($, $$) {
   'use strict';
@@ -68,6 +66,6 @@ var stateCheck = setInterval(function () {
 
     // });
 
-    expandFunc(selector, selectorAll);
+    expandFunc(selector, queryAll);
   }
 }, 100);

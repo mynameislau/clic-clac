@@ -5,11 +5,6 @@ const path = require('path');
 module.exports = {
   context: path.join(__dirname, '.'),
   devtool: debug ? 'inline-sourcemap' : null,
-  entry: {
-    app: [
-      './src/js/expand.js'
-    ]
-  },
   module: {
     loaders: [
       {
@@ -25,11 +20,6 @@ module.exports = {
         }
       }
     ]
-  },
-  output: {
-    path: `${__dirname}/dev/js`,
-    publicPath: 'js/',
-    filename: 'expand.min.js'
   },
   plugins: debug ? [] : [
     new webpack.optimize.DedupePlugin(),
