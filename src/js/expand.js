@@ -1,71 +1,107 @@
-import {queryAll} from './query-all';
+import queryAll from './query-all';
+import { isOrContains, updateState } from './utils';
 
-var selector = function (selectorString, context) {
-  var element = context || document;
-  return element.querySelector(selectorString);
+const expandObjectsMap = {};
+
+const setIsInitialState = (element, initialState = false) => {
+  updateState(element, 'data-initial-state', initialState ? 'true' : 'false');
 };
 
+const refreshState = (expandObj, initialState = false) => {
+  expandObj.controllerElements.forEach(controllerElement => {
+    updateState(controllerElement, 'aria-pressed', expandObj.expanded ? 'true' : 'false');
+    setIsInitialState(controllerElement, initialState);
+  });
 
-var expandFunc = function ($, $$) {
-  'use strict';
+  updateState(expandObj.controlledElement, 'aria-expanded', expandObj.expanded ? 'true' : 'false');
 
-  var expand = {
-    init: function (controller) {
-      var inst = Object.create(expand);
-      var mediaQueryList;
-      inst.controller = controller;
-      inst.controlledID = inst.controller.getAttribute('aria-controls');
-      inst.controlled = $('[id="' + inst.controlledID + '"]');
-      inst.controlled.setAttribute('role', 'region');
-      var expandedState = controller.getAttribute('data-expand-default-state');
-      if (expandedState) { inst.controlled.setAttribute('aria-expanded', expandedState); }
+  setIsInitialState(expandObj.controlledElement, initialState);
+};
 
-      inst.controller.addEventListener('click', function () {
-        inst.setExpanded();
-      });
+const preventScrollToAnchor = expandObj => {
+  const controlledID = expandObj.controlledID;
 
-      var beforePrint = function () {
-        inst.setExpanded(true);
-      };
+  if (expandObj.expanded === false) {
+    expandObj.controlledElement.setAttribute('id', '');
+    window.requestAnimationFrame(() => {
+      expandObj.controlledElement.setAttribute('id', controlledID);
+    });
+  }
+};
 
-      if (window.matchMedia) {
-        mediaQueryList = window.matchMedia('print');
+const changeExpandedState = expandObj => {
+  expandObj.expanded = !expandObj.expanded;
 
-        if (mediaQueryList.addListener) {
-          mediaQueryList.addListener(function (mql) {
-            if (mql.matches) {
-              beforePrint();
-            }
-          });
-        }
-      }
+  refreshState(expandObj);
 
-      window.onbeforeprint = beforePrint;
+  preventScrollToAnchor(expandObj);
+};
 
-      return inst;
-    },
+const addController = (expandObj, element) => {
+  expandObj.controllerElements.push(element);
 
-    setExpanded: function (forcedState) {
-      var oldState = this.controlled.getAttribute('aria-expanded') === 'true';
-      var newState = forcedState !== undefined ? forcedState : !oldState;
-      this.controlled.setAttribute('aria-expanded', newState ? 'true' : 'false');
+  element.setAttribute('aria-controls', expandObj.controlledID);
+};
+
+const expandIfAnchored = expandObj => {
+  try {
+    // Will not work on old IEs
+    if (window.document.querySelector(':target') === expandObj.controlledElement) {
+      changeExpandedState(expandObj);
     }
+  }
+  catch (error) {
+    // Todo
+  }
+};
+
+const createExpand = controllerElement => {
+  const controlledID = controllerElement.getAttribute('data-controls');
+  const controlledElement = window.document.getElementById(controlledID);
+  const defaultState = controllerElement.getAttribute('data-expand-default-state') === 'true';
+  const controlledRole = controlledElement.getAttribute('role');
+
+  const expandObj = {
+    controllerElements: [],
+    controlledElement: controlledElement,
+    controlledID: controlledID,
+    defaultState: defaultState,
+    expanded: defaultState
   };
 
-  $$('[data-expand]').forEach(function (item) {
-    expand.init(item);
+  const controllerElements = expandObj.controllerElements;
+
+  expandObj.controlledElement.setAttribute('role', controlledRole ? controlledRole : 'region');
+
+  window.document.documentElement.addEventListener('click', event => {
+    const controllerElem = controllerElements.reduce(
+      (prev, curr) => (isOrContains(curr, event.target) ? curr : prev),
+      null
+    );
+
+    if (controllerElem) {
+      changeExpandedState(expandObj);
+    }
   });
+
+  refreshState(expandObj, true);
+
+  addController(expandObj, controllerElement);
+
+  expandIfAnchored(expandObj);
+
+  return expandObj;
 };
 
-var stateCheck = setInterval(function () {
-  if (document.readyState === 'complete') {
-    console.log('document is ready');
-    clearInterval(stateCheck);
+export const addExpand = controllerElement => {
+  const ID = controllerElement.getAttribute('data-controls');
 
-    // selectorAll('.page-recherche-garants .sidebar div[class*="facetapi"]').forEach(function (item) {
-
-    // });
-
-    expandFunc(selector, queryAll);
+  if (expandObjectsMap[ID]) {
+    addController(expandObjectsMap[ID], controllerElement);
   }
-}, 100);
+  else {
+    expandObjectsMap[ID] = createExpand(controllerElement);
+  }
+};
+
+queryAll('[data-expand]').forEach(addExpand);

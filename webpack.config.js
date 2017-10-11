@@ -1,29 +1,36 @@
-const debug = true;
-const webpack = require('webpack');
 const path = require('path');
+const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
 
 module.exports = {
-  context: path.join(__dirname, '.'),
-  devtool: debug ? 'inline-sourcemap' : null,
+  entry: './src/js/expand',
+  output: {
+    path: path.resolve(__dirname, 'lib'),
+    filename: 'expand.js',
+    library: 'expand',
+    libraryTarget: 'umd'
+  },
+  devtool: 'source-map',
   module: {
-    loaders: [
+    rules: [
       {
-        test: /\.jsx?$/,
+        test: /\.js/,
+        // Include: [path.resolve(__dirname, 'app/js')]
         exclude: /(node_modules|bower_components)/,
-        loader: 'babel-loader',
-        query: {
-          presets: ['es2015', 'stage-0'],
-          plugins: [
-            'transform-class-properties',
-            'transform-decorators-legacy'
-          ],
+        use: {
+          loader: 'babel-loader',
+          options: {
+            presets: [
+              'es2015',
+              'stage-0'
+            ]
+          }
         }
       }
     ]
   },
-  plugins: debug ? [] : [
-    new webpack.optimize.DedupePlugin(),
-    new webpack.optimize.OccurenceOrderPlugin(),
-    new webpack.optimize.UglifyJsPlugin({ mangle: false, sourcemap: false }),
-  ],
+  plugins: [
+    new UglifyJSPlugin({
+      sourceMap: true
+    })
+  ]
 };
