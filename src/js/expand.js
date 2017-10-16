@@ -88,6 +88,8 @@ const createExpand = controllerElement => {
 
   addController(expandObj, controllerElement);
 
+  refreshState(expandObj, false);
+
   expandIfAnchored(expandObj);
 
   return expandObj;
