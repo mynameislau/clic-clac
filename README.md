@@ -2,7 +2,7 @@
 
 ## HOW TO USE
 
-import `clic-clac/lib/expand` or `clic-clac/lib/tablist` in your main js file (or simply embed it via a `<script>` tag)
+import `clic-cla` in your main js file (or simply embed it via a `<script>` tag)
 
 ## EXPAND
 
