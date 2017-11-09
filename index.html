@@ -1,16 +1,55 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
-  <title>Document</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <style>
+    #expand-test[aria-expanded="true"] {
+      color: green;
+    }
+
+    .tab-content[aria-expanded="false"] {
+      display: none;
+    }
+
+    .tab-button[aria-selected="true"] {
+      color: green;
+    }
+  </style>
 </head>
+
 <body>
-  <button data-expand data-controls="truc">Appui</button>
-  <div id="truc">
-    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aspernatur assumenda, cumque dolore fugit in, a voluptatibus dicta facilis sequi illo iusto maxime unde ad nihil nostrum adipisci deserunt inventore optio.
+  <h1>Clic-clac</h1>
+  <h2>Expand</h2>
+  <button type="button" data-expand data-controls="expand-test">Appui</button>
+  <p id="expand-test">
+    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aspernatur assumenda, cumque dolore fugit in, a voluptatibus dicta
+    facilis sequi illo iusto maxime unde ad nihil nostrum adipisci deserunt inventore optio.
+  </p>
+  <h2>Tablist</h2>
+  <div id="tabs-holder" data-tablist>
+    <div>
+      <button type="button" class="tab-button" data-tab-for="a-tab" data-owner="tabs-holder">The A tab</button>
+      <button type="button" class="tab-button" data-tab-for="b-tab" data-owner="tabs-holder" data-expand-default-state="true">The B tab</button>
+    </div>
+    <div class="tab-content" id="a-tab">
+      <h3>Content of the A tab</h3>
+      <p>
+        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aspernatur assumenda, cumque dolore fugit in, a voluptatibus dicta
+        facilis sequi illo iusto maxime unde ad nihil nostrum adipisci deserunt inventore optio.
+      </p>
+    </div>
+    <div class="tab-content" id="b-tab">
+      <h3>Content of the B tab</h3>
+      <p>
+        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aspernatur assumenda, cumque dolore fugit in, a voluptatibus dicta
+        facilis sequi illo iusto maxime unde ad nihil nostrum adipisci deserunt inventore optio.
+      </p>
+    </div>
   </div>
+  <script src="lib/clic-clac.js"></script>
 </body>
-<script src="lib/expand.js"></script>
-<script>
-</script>
+
 </html>

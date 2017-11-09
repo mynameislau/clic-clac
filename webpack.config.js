@@ -2,11 +2,11 @@ const path = require('path');
 const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
 
 module.exports = {
-  entry: './src/js/expand',
+  entry: './src/js/clic-clac',
   output: {
     path: path.resolve(__dirname, 'lib'),
-    filename: 'expand.js',
-    library: 'expand',
+    filename: 'clic-clac.js',
+    library: 'clic-clac',
     libraryTarget: 'umd'
   },
   devtool: 'source-map',

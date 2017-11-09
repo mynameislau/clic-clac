@@ -3,7 +3,7 @@
     "object-curly-spacing": [2, "always"],
     "object-shorthand": [2, "never"],
     "padded-blocks": [2, {"switches": "always", "classes": "never", "blocks": "never"} ],
-    "no-confusing-arrow": [2, {"allowParens": true } ],
+    "no-confusing-arrow": 0,
     "one-var": 0,
     "quote-props": 0,
     "no-console": 1,
@@ -11,9 +11,11 @@
     "quotes": [2, "single"],
     "dot-location": [2, "property"],
     "arrow-parens": 0,
+    "sort-keys": 0,
     "no-magic-numbers": [1, {"ignore": [1, 0 ] } ],
     "object-property-newline": [2, {"allowMultiplePropertiesPerLine": true } ],
     "object-curly-newline": 0,
+    "multiline-ternary": 0,
     "eol-last": 0,
     "indent": [2, 2 ],
     "sort-imports": 0,
@@ -33,6 +35,7 @@
     }
   },
   "env": {
+    "browser": true,
     "node": true,
     "es6": true
   }

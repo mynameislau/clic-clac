@@ -1,8 +1,8 @@
 {
   "name": "clic-clac",
-  "version": "2.0.1",
+  "version": "2.1.0",
   "description": "",
-  "main": "lib/expand.js",
+  "main": "lib/clic-clac.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "webpack-dev-server --content-base dev --inline --hot",

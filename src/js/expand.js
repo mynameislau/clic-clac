@@ -16,10 +16,16 @@ const refreshState = (expandObj, initialState = false) => {
   updateState(expandObj.controlledElement, 'aria-expanded', expandObj.expanded ? 'true' : 'false');
 
   setIsInitialState(expandObj.controlledElement, initialState);
+
+  if (window.requestAnimationFrame) {
+    window.requestAnimationFrame(() => {
+      window.dispatchEvent(new Event('resize'));
+    });
+  }
 };
 
 const preventScrollToAnchor = expandObj => {
-  const controlledID = expandObj.controlledID;
+  const { controlledID } = expandObj;
 
   if (expandObj.expanded === false) {
     expandObj.controlledElement.setAttribute('id', '');
@@ -75,7 +81,7 @@ const createExpand = controllerElement => {
 
   window.document.documentElement.addEventListener('click', event => {
     const controllerElem = controllerElements.reduce(
-      (prev, curr) => (isOrContains(curr, event.target) ? curr : prev),
+      (prev, curr) => isOrContains(curr, event.target) ? curr : prev,
       null
     );
 
