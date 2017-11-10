@@ -2,7 +2,7 @@
 
 ## HOW TO USE
 
-import `clic-cla` in your main js file (or simply embed it via a `<script>` tag)
+import `clic-clac` in your main js file (or simply embed it via a `<script>` tag)
 
 ## EXPAND
 
