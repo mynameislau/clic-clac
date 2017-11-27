@@ -29,3 +29,7 @@ to specify a default state for this tab
 
 Every time  an attribute is modified, a custom `clic-clac-state-update` event is dispatched on the element whose attribute changed.
 You can use this event as a hook to add custom js behaviours.
+The `detail` property holds infos about the element : 
+ - `attribute` : which attribute changed
+ - `prevState`: previous value of the attribute
+ - `newState` : new value of the attribute
