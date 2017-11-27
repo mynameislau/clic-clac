@@ -24,3 +24,8 @@ to specify the tablist that owns the tab.
 
 Set a *data-expand-default-state* attribtue to true or false if you want
 to specify a default state for this tab
+
+## EVENTS
+
+Every time  an attribute is modified, a custom `clic-clac-state-update` event is dispatched on the element whose attribute changed.
+You can use this event as a hook to add custom js behaviours.

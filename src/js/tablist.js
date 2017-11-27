@@ -13,7 +13,7 @@
 
 import 'core-js/fn/array/includes';
 import queryAll from './query-all';
-import { isOrContains, updateState } from './utils';
+import { isOrContains, updateAndDispatch } from './utils';
 
 const tablistArray = [];
 
@@ -56,7 +56,7 @@ const changeSelectedState = (targetTab, tablist) => {
 };
 
 const setIsInitialState = (element, initialState = false) => {
-  updateState(element, 'data-initial-state', initialState ? 'true' : 'false');
+  updateAndDispatch(element, 'data-initial-state', initialState ? 'true' : 'false');
 };
 
 const getContainingElement = (parents, element) =>
@@ -68,19 +68,19 @@ const getContainingTab = (tabs, element) =>
 const refreshTabList = (tablist, initialState = false) => {
   const isTabSelected = tablist.tabs.some(tab => tab.selected);
 
-  updateState(
+  updateAndDispatch(
     tablist.tablistElement,
     'aria-multiselectable',
     tablist.multiselectable ? 'true' : 'false'
   );
-  updateState(tablist.tablistElement, 'data-has-selected-tab', isTabSelected ? 'true' : 'false');
+  updateAndDispatch(tablist.tablistElement, 'data-has-selected-tab', isTabSelected ? 'true' : 'false');
 
   tablist.tabs.forEach(tab => {
     const targetState = tab.selected ? 'true' : 'false';
 
-    updateState(tab.tabPanelElement, 'aria-expanded', targetState);
-    updateState(tab.tabElement, 'aria-selected', targetState);
-    updateState(
+    updateAndDispatch(tab.tabPanelElement, 'aria-expanded', targetState);
+    updateAndDispatch(tab.tabElement, 'aria-selected', targetState);
+    updateAndDispatch(
       tab.tabPanelElement,
       'data-tablist-has-tab-selected',
       isTabSelected ? 'true' : 'false'

@@ -1,19 +1,19 @@
 import queryAll from './query-all';
-import { isOrContains, updateState } from './utils';
+import { isOrContains, updateAndDispatch } from './utils';
 
 const expandObjectsMap = {};
 
 const setIsInitialState = (element, initialState = false) => {
-  updateState(element, 'data-initial-state', initialState ? 'true' : 'false');
+  updateAndDispatch(element, 'data-initial-state', initialState ? 'true' : 'false');
 };
 
 const refreshState = (expandObj, initialState = false) => {
   expandObj.controllerElements.forEach(controllerElement => {
-    updateState(controllerElement, 'aria-pressed', expandObj.expanded ? 'true' : 'false');
+    updateAndDispatch(controllerElement, 'aria-pressed', expandObj.expanded ? 'true' : 'false');
     setIsInitialState(controllerElement, initialState);
   });
 
-  updateState(expandObj.controlledElement, 'aria-expanded', expandObj.expanded ? 'true' : 'false');
+  updateAndDispatch(expandObj.controlledElement, 'aria-expanded', expandObj.expanded ? 'true' : 'false');
 
   setIsInitialState(expandObj.controlledElement, initialState);
 

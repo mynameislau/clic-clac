@@ -10,13 +10,6 @@
       color: green;
     }
 
-    .tab-content[aria-expanded="false"] {
-      display: none;
-    }
-
-    .tab-button[aria-selected="true"] {
-      color: green;
-    }
   </style>
 </head>
 
@@ -24,7 +17,7 @@
   <h1>Clic-clac</h1>
   <h2>Expand</h2>
   <button type="button" data-expand data-controls="expand-test">Appui</button>
-  <p id="expand-test">
+  <p id="expand-test" data-jquery-expand>
     Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aspernatur assumenda, cumque dolore fugit in, a voluptatibus dicta
     facilis sequi illo iusto maxime unde ad nihil nostrum adipisci deserunt inventore optio.
   </p>
