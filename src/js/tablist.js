@@ -12,6 +12,7 @@
  */
 
 import 'core-js/fn/array/includes';
+import 'events-polyfill';
 import queryAll from './query-all';
 import { isOrContains, updateAndDispatch } from './utils';
 

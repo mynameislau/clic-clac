@@ -1,6 +1,6 @@
 {
   "name": "clic-clac",
-  "version": "2.1.5",
+  "version": "2.1.6",
   "description": "## HOW TO USE",
   "main": "lib/clic-clac.js",
   "scripts": {
@@ -28,7 +28,9 @@
   "directories": {
     "lib": "lib"
   },
-  "dependencies": {},
+  "dependencies": {
+    "events-polyfill": "^1.1.11"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/mynameislau/clic-clac.git"

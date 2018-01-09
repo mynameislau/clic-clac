@@ -1,4 +1,5 @@
 import queryAll from './query-all';
+import 'events-polyfill';
 import { isOrContains, updateAndDispatch } from './utils';
 
 const expandObjectsMap = {};
