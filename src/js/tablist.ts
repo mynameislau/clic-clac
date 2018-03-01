@@ -1,11 +1,12 @@
-/*
- * Set a *data-tablist* attribute on the element that will be the tablist,
+/**
+ * @file Set a *data-tablist* attribute on the element that will be the tablist,
  * the value of the attribute
  * is the name of the tablist, you can leave it blank and use
  * the id attribute (used to fill the aria-owns attribute later)
- * You can specify if the tablist is multiselectable with the *data-multiselectable* attribute.
+ * You can specify if the tablist is multiselectable with the
+ * data-multiselectable* attribute.
  * On each tab button, set a *data-tab-for* attribute which value is the id
- * of the controlled tab panel. Set a *data-owner* attribute 
+ * of the controlled tab panel. Set a *data-owner* attribute
  * to specify the tablist that owns the tab.
  * Set a *data-expand-default-state* attribtue to true or false if you want
  * to specify a default state for this tab
@@ -21,7 +22,9 @@ const tablistArray = [];
 const anotherTabIsSelected = (tablist, tab) => {
   return (
     tablist.tabs.filter(curr => {
-      return curr !== tab && curr.selected && curr.tabPanelID !== tab.tabPanelID;
+      return (
+        curr !== tab && curr.selected && curr.tabPanelID !== tab.tabPanelID
+      );
     }).length > 0
   );
 };
@@ -32,8 +35,10 @@ const tabIsRelated = (tab, tabPanelID) => {
 
 const changeSelectedState = (targetTab, tablist) => {
   const selected = !targetTab.selected;
-  const shouldPreventDeselection
-    = selected === false && !anotherTabIsSelected(tablist, targetTab) && tablist.keepOneTabSelected;
+  const shouldPreventDeselection =
+    selected === false &&
+    !anotherTabIsSelected(tablist, targetTab) &&
+    tablist.keepOneTabSelected;
 
   const relatedTabs = tablist.tabs.filter(curr => {
     return tabIsRelated(curr, targetTab.tabPanelID);
@@ -57,14 +62,24 @@ const changeSelectedState = (targetTab, tablist) => {
 };
 
 const setIsInitialState = (element, initialState = false) => {
-  updateAndDispatch(element, 'data-initial-state', initialState ? 'true' : 'false');
+  updateAndDispatch(
+    element,
+    'data-initial-state',
+    initialState ? 'true' : 'false'
+  );
 };
 
 const getContainingElement = (parents, element) =>
-  parents.reduce((prev, curr) => isOrContains(curr, element) ? curr : prev, null);
+  parents.reduce(
+    (prev, curr) => (isOrContains(curr, element) ? curr : prev),
+    null
+  );
 
 const getContainingTab = (tabs, element) =>
-  tabs.reduce((prev, curr) => isOrContains(curr.tabElement, element) ? curr : prev, null);
+  tabs.reduce(
+    (prev, curr) => (isOrContains(curr.tabElement, element) ? curr : prev),
+    null
+  );
 
 const refreshTabList = (tablist, initialState = false) => {
   const isTabSelected = tablist.tabs.some(tab => tab.selected);
@@ -74,7 +89,11 @@ const refreshTabList = (tablist, initialState = false) => {
     'aria-multiselectable',
     tablist.multiselectable ? 'true' : 'false'
   );
-  updateAndDispatch(tablist.tablistElement, 'data-has-selected-tab', isTabSelected ? 'true' : 'false');
+  updateAndDispatch(
+    tablist.tablistElement,
+    'data-has-selected-tab',
+    isTabSelected ? 'true' : 'false'
+  );
 
   tablist.tabs.forEach(tab => {
     const targetState = tab.selected ? 'true' : 'false';
@@ -121,9 +140,16 @@ const addAttributesToTab = tab => {
    */
 };
 
-const delegateClickHandler = (tabElements, tablist, tabPanelElements) => event => {
+const delegateClickHandler = (
+  tabElements,
+  tablist,
+  tabPanelElements
+) => event => {
   const containingTabElement = getContainingElement(tabElements, event.target);
-  const containingPanelElement = getContainingElement(tabPanelElements, event.target);
+  const containingPanelElement = getContainingElement(
+    tabPanelElements,
+    event.target
+  );
   const containingTab = getContainingTab(tablist.tabs, event.target);
   const isInTabElements = containingTabElement !== null;
   const isInPanelElements = containingPanelElement !== null;
@@ -165,12 +191,10 @@ const initTablist = tablist => {
     delegateClickHandler(tabElements, tablist, tabPanelElements)
   );
 
-  const noTabIsSelected
-    = tablist.tabs.filter(curr => {
+  const noTabIsSelected =
+    tablist.tabs.filter(curr => {
       return curr.selected;
     }).length === 0;
-
-  // Console.log(noTabIsSelected, tablist.keepOneTabSelected);
 
   if (tablist.keepOneTabSelected && noTabIsSelected) {
     changeSelectedState(tablist.tabs[0], tablist);
@@ -181,47 +205,58 @@ const initTablist = tablist => {
   return tablist;
 };
 
+/**
+ * @param {Node} tabElement
+ * @param {string} tablistID
+ * @param {number} index
+ * @returns {TabInfos}
+ */
 const createTab = (tabElement, tablistID, index) => {
-  const selected = tabElement.getAttribute('data-expand-default-state') === 'true';
+  const selected =
+    tabElement.getAttribute('data-expand-default-state') === 'true';
   const defaultState = selected;
   const tabPanelID = tabElement.getAttribute('data-tab-for');
 
   return {
-    tabElement: tabElement,
+    tabElement,
     tabPanelElement: window.document.getElementById(tabPanelID),
-    defaultState: defaultState,
-    tablistID: tablistID,
+    defaultState,
+    tablistID,
     tabID: tabElement.getAttribute('id') || `${tablistID}-tab-${index}`,
-    tabPanelID: tabPanelID,
-    selected: selected
+    tabPanelID,
+    selected
   };
 };
 
+/**
+ * @param {Node} tablistElement
+ * @returns {Object}
+ */
 const createTablist = tablistElement => {
-  // Console.log('ookkkkkk');
-  const tablistID
-    = tablistElement.getAttribute('data-tablist') || tablistElement.getAttribute('id');
+  const tablistID =
+    tablistElement.getAttribute('data-tablist') ||
+    tablistElement.getAttribute('id');
   const tabElements = queryAll(`[data-owner="${tablistID}"]`);
   const tabs = tabElements.map((tabElement, index) => {
     return createTab(tabElement, tablistID, index);
   });
 
-  // Console.log(tablistElement.getAttribute('data-at-least-one'));
-
   return {
-    tablistID: tablistID,
-    tabs: tabs,
+    tablistID,
+    tabs,
     updateHash: false, // Todo
-    keepOneTabSelected: tablistElement.getAttribute('data-at-least-one') === 'true',
-    multiselectable: tablistElement.getAttribute('data-multiselectable') === 'true',
-    tablistElement: tablistElement,
+    keepOneTabSelected:
+      tablistElement.getAttribute('data-at-least-one') === 'true',
+    multiselectable:
+      tablistElement.getAttribute('data-multiselectable') === 'true',
+    tablistElement,
     clickOutside: tablistElement.getAttribute('data-click-outside')
   };
 };
 
 const getTablist = tablistID =>
   tablistArray.reduce(
-    (prev, currValue) => currValue.tablistID === tablistID ? currValue : prev,
+    (prev, currValue) => (currValue.tablistID === tablistID ? currValue : prev),
     null
   );
 
@@ -236,7 +271,7 @@ export const setKeepOneTabSelected = (tablistID, keepOneTabSelected) => {
   refreshTabList(tablist);
 };
 
-export const setMultiselectable = (tablistID, multi) => {
+export const setMultiselectable = (tablistID: string, multi: boolean) => {
   const tablist = getTablist(tablistID);
 
   tablist.multiselectable = multi;

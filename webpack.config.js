@@ -9,20 +9,20 @@ module.exports = {
     library: 'clic-clac',
     libraryTarget: 'umd'
   },
+  resolve: {
+    extensions: ['.tsx', '.ts', '.js']
+  },
   devtool: 'source-map',
   module: {
     rules: [
       {
-        test: /\.js/,
+        test: /\.js|\.ts/,
         // Include: [path.resolve(__dirname, 'app/js')]
         exclude: /(node_modules|bower_components)/,
         use: {
           loader: 'babel-loader',
           options: {
-            presets: [
-              'es2015',
-              'stage-0'
-            ]
+            presets: ['@babel/env', '@babel/preset-typescript']
           }
         }
       }
