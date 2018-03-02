@@ -6,7 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "webpack-dev-server --content-base dev --inline --hot",
-    "start": "webpack --mode production"
+    "start":
+      "typedoc --out ./doc --module es6 ./src/js/clic-clac.ts && webpack --mode production"
   },
   "author": "",
   "license": "ISC",
@@ -38,11 +39,7 @@
     "type": "git",
     "url": "git+https://github.com/mynameislau/clic-clac.git"
   },
-  "keywords": [
-    "collapse",
-    "aria",
-    "tablist"
-  ],
+  "keywords": ["collapse", "aria", "tablist"],
   "bugs": {
     "url": "https://github.com/mynameislau/clic-clac/issues"
   },

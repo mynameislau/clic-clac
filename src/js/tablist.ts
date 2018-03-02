@@ -1,5 +1,5 @@
 /**
- * @file Set a *data-tablist* attribute on the element that will be the tablist,
+ * @module Set a *data-tablist* attribute on the element that will be the tablist,
  * the value of the attribute
  * is the name of the tablist, you can leave it blank and use
  * the id attribute (used to fill the aria-owns attribute later)
@@ -17,9 +17,28 @@ import 'events-polyfill';
 import queryAll from './query-all';
 import { isOrContains, updateAndDispatch } from './utils';
 
-const tablistArray = [];
+interface TabData {
+  tabElement: Element;
+  tabPanelElement: Element;
+  defaultState: boolean;
+  tablistID: string;
+  tabID: string;
+  tabPanelID: string;
+  selected: boolean;
+}
 
-const anotherTabIsSelected = (tablist, tab) => {
+interface TablistData {
+  tablistID: string;
+  tabs: TabData[];
+  keepOneTabSelected: boolean;
+  multiselectable: boolean;
+  tablistElement: Element;
+  clickOutside: string | null;
+}
+
+const tablistArray: TablistData[] = [];
+
+const anotherTabIsSelected = (tablist: TablistData, tab: TabData) => {
   return (
     tablist.tabs.filter(curr => {
       return (
@@ -29,11 +48,11 @@ const anotherTabIsSelected = (tablist, tab) => {
   );
 };
 
-const tabIsRelated = (tab, tabPanelID) => {
+const tabIsRelated = (tab: TabData, tabPanelID: string) => {
   return tab.tabPanelID === tabPanelID;
 };
 
-const changeSelectedState = (targetTab, tablist) => {
+const changeSelectedState = (targetTab: TabData, tablist: TablistData) => {
   const selected = !targetTab.selected;
   const shouldPreventDeselection =
     selected === false &&
@@ -49,7 +68,7 @@ const changeSelectedState = (targetTab, tablist) => {
   }
 
   tablist.tabs.forEach(tab => {
-    const isRelated = relatedTabs.includes(tab);
+    const isRelated = relatedTabs.indexOf(tab) !== -1;
     const shouldDeselect = !isRelated && !tablist.multiselectable;
 
     if (shouldDeselect) {
@@ -61,7 +80,7 @@ const changeSelectedState = (targetTab, tablist) => {
   });
 };
 
-const setIsInitialState = (element, initialState = false) => {
+const setIsInitialState = (element: Element, initialState = false) => {
   updateAndDispatch(
     element,
     'data-initial-state',
@@ -69,19 +88,19 @@ const setIsInitialState = (element, initialState = false) => {
   );
 };
 
-const getContainingElement = (parents, element) =>
+const getContainingElement = (parents: Element[], element: Element) =>
   parents.reduce(
     (prev, curr) => (isOrContains(curr, element) ? curr : prev),
     null
   );
 
-const getContainingTab = (tabs, element) =>
+const getContainingTab = (tabs: TabData[], element: Element) =>
   tabs.reduce(
     (prev, curr) => (isOrContains(curr.tabElement, element) ? curr : prev),
     null
   );
 
-const refreshTabList = (tablist, initialState = false) => {
+const refreshTabList = (tablist: TablistData, initialState = false) => {
   const isTabSelected = tablist.tabs.some(tab => tab.selected);
 
   updateAndDispatch(
@@ -116,16 +135,16 @@ const refreshTabList = (tablist, initialState = false) => {
   });
 };
 
-const deselectAll = tablist => {
+const deselectAll = (tablist: TablistData) => {
   tablist.tabs.forEach(tab => {
     tab.selected = false;
   });
   refreshTabList(tablist);
 };
 
-const concatWithSpace = (prev, val) => `${prev} ${val}`;
+const concatWithSpace = (prev: string, val: string) => `${prev} ${val}`;
 
-const addAttributesToTab = tab => {
+const addAttributesToTab = (tab: TabData) => {
   tab.tabElement.setAttribute('role', 'tab');
   tab.tabElement.setAttribute('id', tab.tabID);
   tab.tabElement.setAttribute('aria-controls', tab.tabPanelID);
@@ -141,16 +160,19 @@ const addAttributesToTab = tab => {
 };
 
 const delegateClickHandler = (
-  tabElements,
-  tablist,
-  tabPanelElements
-) => event => {
-  const containingTabElement = getContainingElement(tabElements, event.target);
+  tabElements: Element[],
+  tablist: TablistData,
+  tabPanelElements: Element[]
+) => (event: MouseEvent) => {
+
+  const eventTarget = event.target as Element;
+  
+  const containingTabElement = getContainingElement(tabElements, eventTarget);
   const containingPanelElement = getContainingElement(
     tabPanelElements,
-    event.target
+    eventTarget
   );
-  const containingTab = getContainingTab(tablist.tabs, event.target);
+  const containingTab = getContainingTab(tablist.tabs, eventTarget) as TabData;
   const isInTabElements = containingTabElement !== null;
   const isInPanelElements = containingPanelElement !== null;
   const isOutside = !isInTabElements && !isInPanelElements;
@@ -165,7 +187,7 @@ const delegateClickHandler = (
   }
 };
 
-const addTablistAttributes = tablist => {
+const addTablistAttributes = (tablist: TablistData) => {
   tablist.tablistElement.setAttribute('id', tablist.tablistID);
   tablist.tablistElement.setAttribute('role', 'tablist');
   tablist.tablistElement.setAttribute(
@@ -178,7 +200,7 @@ const addTablistAttributes = tablist => {
   );
 };
 
-const initTablist = tablist => {
+const initTablist = (tablist: TablistData) => {
   addTablistAttributes(tablist);
 
   tablist.tabs.forEach(addAttributesToTab);
@@ -205,21 +227,29 @@ const initTablist = tablist => {
   return tablist;
 };
 
-/**
- * @param {Node} tabElement
- * @param {string} tablistID
- * @param {number} index
- * @returns {TabInfos}
- */
-const createTab = (tabElement, tablistID, index) => {
+const createTab = (
+  tabElement: Element,
+  tablistID: string,
+  index: number
+): TabData => {
   const selected =
     tabElement.getAttribute('data-expand-default-state') === 'true';
   const defaultState = selected;
   const tabPanelID = tabElement.getAttribute('data-tab-for');
 
+  if (tabPanelID === null) {
+    throw new Error('data-tab-for attribute missing');
+  }
+
+  const tabPanelElement = window.document.getElementById(tabPanelID);
+
+  if (tabPanelElement === null) {
+    throw new Error('tab panel could not be found');
+  }
+
   return {
     tabElement,
-    tabPanelElement: window.document.getElementById(tabPanelID),
+    tabPanelElement,
     defaultState,
     tablistID,
     tabID: tabElement.getAttribute('id') || `${tablistID}-tab-${index}`,
@@ -228,15 +258,16 @@ const createTab = (tabElement, tablistID, index) => {
   };
 };
 
-/**
- * @param {Node} tablistElement
- * @returns {Object}
- */
-const createTablist = tablistElement => {
+const createTablist = (tablistElement: Element): TablistData => {
   const tablistID =
     tablistElement.getAttribute('data-tablist') ||
     tablistElement.getAttribute('id');
   const tabElements = queryAll(`[data-owner="${tablistID}"]`);
+
+  if (tablistID === null) {
+    throw new Error('tablist id could not be determined');
+  }
+
   const tabs = tabElements.map((tabElement, index) => {
     return createTab(tabElement, tablistID, index);
   });
@@ -244,7 +275,6 @@ const createTablist = tablistElement => {
   return {
     tablistID,
     tabs,
-    updateHash: false, // Todo
     keepOneTabSelected:
       tablistElement.getAttribute('data-at-least-one') === 'true',
     multiselectable:
@@ -254,17 +284,27 @@ const createTablist = tablistElement => {
   };
 };
 
-const getTablist = tablistID =>
-  tablistArray.reduce(
+const getTablist = (tablistID: string) => {
+  const tablistData = tablistArray.reduce(
     (prev, currValue) => (currValue.tablistID === tablistID ? currValue : prev),
     null
   );
 
-export const addTablist = tablistElement => {
+  if (tablistData === null) {
+    throw new Error('wrong id');
+  } else {
+    return tablistData;
+  }
+};
+
+export const addTablist = (tablistElement: Element) => {
   tablistArray.push(initTablist(createTablist(tablistElement)));
 };
 
-export const setKeepOneTabSelected = (tablistID, keepOneTabSelected) => {
+export const setKeepOneTabSelected = (
+  tablistID: string,
+  keepOneTabSelected: boolean
+) => {
   const tablist = getTablist(tablistID);
 
   tablist.keepOneTabSelected = keepOneTabSelected;
