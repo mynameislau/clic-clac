@@ -1,5 +1,9 @@
 # CLIC - CLAC
 
+## EXAMPLES
+
+http://mynameislau.github.io/clic-clac
+
 ## HOW TO USE
 
 import `clic-clac` in your main js file (or simply embed it via a `<script>` tag)
