@@ -15,7 +15,22 @@ export const updateState = (
   }
 };
 
-export const updateAndDispatch = (element: Element, attribute: string, targetState: string) => {
+export const attributesToArray = (map: NamedNodeMap) => {
+  const results: Attr[] = [];
+  /* tslint:disable */
+  for (let i = 0; i < map.length; i++) {
+    /* tslint:enable */
+    results.push(map[i]);
+  }
+
+  return results;
+};
+
+export const updateAndDispatch = (
+  element: Element,
+  attribute: string,
+  targetState: string
+) => {
   const stateUpdateEvent = new CustomEvent('clic-clac-state-update', {
     detail: {
       element,

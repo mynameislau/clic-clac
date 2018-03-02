@@ -15,7 +15,7 @@
 import 'core-js/fn/array/includes';
 import 'events-polyfill';
 import queryAll from './query-all';
-import { isOrContains, updateAndDispatch } from './utils';
+import { isOrContains, updateAndDispatch, attributesToArray } from './utils';
 
 interface TabData {
   tabElement: Element;
@@ -164,9 +164,8 @@ const delegateClickHandler = (
   tablist: TablistData,
   tabPanelElements: Element[]
 ) => (event: MouseEvent) => {
-
   const eventTarget = event.target as Element;
-  
+
   const containingTabElement = getContainingElement(tabElements, eventTarget);
   const containingPanelElement = getContainingElement(
     tabPanelElements,
@@ -258,11 +257,31 @@ const createTab = (
   };
 };
 
+const switchElementType = (tabElement: Element) => {
+  if (tabElement.nodeName === 'A') {
+    const buttonElement = document.createElement('button');
+    const attributes = attributesToArray(tabElement.attributes);
+    attributes.forEach(attr =>
+      buttonElement.setAttributeNode(attr.cloneNode(true) as Attr)
+    );
+    buttonElement.innerHTML = tabElement.innerHTML;
+    buttonElement.removeAttribute('href');
+    buttonElement.setAttribute('type', 'button');
+    const tabParent = tabElement.parentElement as HTMLElement;
+    tabParent.insertBefore(buttonElement, tabElement);
+    tabParent.removeChild(tabElement);
+    return buttonElement;
+  } else {
+    return tabElement;
+  }
+};
+
 const createTablist = (tablistElement: Element): TablistData => {
   const tablistID =
     tablistElement.getAttribute('data-tablist') ||
     tablistElement.getAttribute('id');
-  const tabElements = queryAll(`[data-owner="${tablistID}"]`);
+
+  const tabElements = queryAll(`[data-owner="${tablistID}"]`).map(switchElementType);
 
   if (tablistID === null) {
     throw new Error('tablist id could not be determined');
@@ -297,10 +316,16 @@ const getTablist = (tablistID: string) => {
   }
 };
 
+/**
+ * Adds a new tablist. You have to specify the correct attributes on the element.
+ */
 export const addTablist = (tablistElement: Element) => {
   tablistArray.push(initTablist(createTablist(tablistElement)));
 };
 
+/**
+ * Changes the keepOneTabSelected property of a tablist, given its id.
+ */
 export const setKeepOneTabSelected = (
   tablistID: string,
   keepOneTabSelected: boolean
@@ -311,6 +336,9 @@ export const setKeepOneTabSelected = (
   refreshTabList(tablist);
 };
 
+/**
+ * Changes the multiselectable property of a tablist, given its id.
+ */
 export const setMultiselectable = (tablistID: string, multi: boolean) => {
   const tablist = getTablist(tablistID);
 
