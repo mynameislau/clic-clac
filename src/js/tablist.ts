@@ -310,7 +310,7 @@ const createTablist = (tablistElement: Element): TablistData | null => {
     tablistID,
     tabs,
     keepOneTabSelected:
-      tablistElement.getAttribute('data-at-least-one') === 'true',
+      tablistElement.getAttribute('data-at-least-one') === 'false' ? false : true,
     multiselectable:
       tablistElement.getAttribute('data-multiselectable') === 'true',
     tablistElement,

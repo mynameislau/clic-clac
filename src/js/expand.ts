@@ -1,6 +1,6 @@
 import queryAll from './query-all';
 import 'events-polyfill';
-import { isOrContains, updateAndDispatch } from './utils';
+import { isOrContains, updateAndDispatch, generateCaughtError } from './utils';
 
 interface ExpandData {
   controllerElements: Element[];
@@ -83,15 +83,18 @@ const expandIfAnchored = (expandObj: ExpandData) => {
   }
 };
 
-const createExpand = (controllerElement: Element) => {
+const createExpand = (controllerElement: Element): ExpandData | null => {
   const controlledID = controllerElement.getAttribute('data-controls');
   if (controlledID === null) {
-    throw new Error('data-controls attribute error');
+    return generateCaughtError('data-controls attribute error', null);
   }
   const controlledElement = window.document.getElementById(controlledID);
 
   if (controlledElement === null) {
-    throw new Error(`element with ID ${controlledID} cannot be found`);
+    return generateCaughtError(
+      `element with ID ${controlledID} cannot be found`,
+      null
+    );
   }
 
   const defaultState =
@@ -115,7 +118,8 @@ const createExpand = (controllerElement: Element) => {
 
   window.document.documentElement.addEventListener('click', event => {
     const controllerElem = controllerElements.reduce(
-      (prev, curr) => (isOrContains(curr, event.target as Element) ? curr : prev),
+      (prev, curr) =>
+        isOrContains(curr, event.target as Element) ? curr : prev,
       null
     );
 
@@ -152,7 +156,7 @@ export const addExpand = (controllerElement: Element) => {
   const ID = controllerElement.getAttribute('data-controls');
 
   if (ID === null) {
-    throw new Error('no data-controls attribute');
+    return generateCaughtError('no data-controls attribute', null);
   }
 
   const expandObj = getExpandObj(ID, expandObjects);
@@ -160,7 +164,10 @@ export const addExpand = (controllerElement: Element) => {
   if (expandObj) {
     addController(expandObj, controllerElement);
   } else {
-    expandObjects.push(createExpand(controllerElement));
+    const newExpand = createExpand(controllerElement);
+    if (newExpand) {
+      expandObjects.push(newExpand);
+    }
   }
 };
 
