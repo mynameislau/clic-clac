@@ -43,3 +43,14 @@ export const updateAndDispatch = (
     element.dispatchEvent(stateUpdateEvent)
   );
 };
+
+export const generateCaughtError = <T>(message: string, defaultData: T) => {
+  try {
+    throw new Error(message);
+  } catch (e) {
+    /* tslint:disable */
+    console.error(`Caught error : ${message}`);
+    /* tslint:enable */
+    return defaultData;
+  }
+};

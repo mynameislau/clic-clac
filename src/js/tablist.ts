@@ -15,7 +15,12 @@
 import 'core-js/fn/array/includes';
 import 'events-polyfill';
 import queryAll from './query-all';
-import { isOrContains, updateAndDispatch, attributesToArray } from './utils';
+import {
+  isOrContains,
+  updateAndDispatch,
+  attributesToArray,
+  generateCaughtError
+} from './utils';
 
 interface TabData {
   tabElement: Element;
@@ -230,20 +235,20 @@ const createTab = (
   tabElement: Element,
   tablistID: string,
   index: number
-): TabData => {
+): TabData | null => {
   const selected =
     tabElement.getAttribute('data-expand-default-state') === 'true';
   const defaultState = selected;
   const tabPanelID = tabElement.getAttribute('data-tab-for');
 
   if (tabPanelID === null) {
-    throw new Error('data-tab-for attribute missing');
+    return generateCaughtError('data-tab-for attribute missing', null);
   }
 
   const tabPanelElement = window.document.getElementById(tabPanelID);
 
   if (tabPanelElement === null) {
-    throw new Error('tab panel could not be found');
+    return generateCaughtError('tab panel could not be found', null);
   }
 
   return {
@@ -276,20 +281,30 @@ const switchElementType = (tabElement: Element) => {
   }
 };
 
-const createTablist = (tablistElement: Element): TablistData => {
+const createTablist = (tablistElement: Element): TablistData | null => {
   const tablistID =
     tablistElement.getAttribute('data-tablist') ||
     tablistElement.getAttribute('id');
 
-  const tabElements = queryAll(`[data-owner="${tablistID}"]`).map(switchElementType);
+  const tabElements = queryAll(`[data-owner="${tablistID}"]`).map(
+    switchElementType
+  );
 
   if (tablistID === null) {
-    throw new Error('tablist id could not be determined');
+    return generateCaughtError('tablist id could not be determined', null);
   }
 
-  const tabs = tabElements.map((tabElement, index) => {
-    return createTab(tabElement, tablistID, index);
-  });
+  const tabs = tabElements.reduce(
+    (acc, tabElement, index) => {
+      const maybeTab = createTab(tabElement, tablistID, index);
+      if (maybeTab === null) {
+        return acc;
+      } else {
+        return [...acc, maybeTab];
+      }
+    },
+    [] as TabData[]
+  );
 
   return {
     tablistID,
@@ -320,7 +335,10 @@ const getTablist = (tablistID: string) => {
  * Adds a new tablist. You have to specify the correct attributes on the element.
  */
 export const addTablist = (tablistElement: Element) => {
-  tablistArray.push(initTablist(createTablist(tablistElement)));
+  const newTablist = createTablist(tablistElement);
+  if (newTablist !== null) {
+    tablistArray.push(initTablist(newTablist));
+  }
 };
 
 /**
