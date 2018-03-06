@@ -1,5 +1,7 @@
 # CLIC - CLAC
 
+[![Dependency status][david-dm-image]][david-dm-url]
+
 ## EXAMPLES
 
 http://mynameislau.github.io/clic-clac
@@ -39,3 +41,6 @@ The `detail` property holds infos about the element :
  - `attribute` : which attribute changed
  - `prevState`: previous value of the attribute
  - `newState` : new value of the attribute
+ 
+[david-dm-image]: https://img.shields.io/david/mynameislau/clic-clac.svg
+[david-dm-url]: https://david-dm.org/mynameislau/clic-clac
