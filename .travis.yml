@@ -1,0 +1,18 @@
+dist: trusty
+
+language: node_js
+
+node_js:
+  - "9"
+
+sudo: false
+
+branches:
+   only:
+   - master
+
+script:
+  - npm test
+
+addons:
+  chrome: stable
