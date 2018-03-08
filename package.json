@@ -4,7 +4,7 @@
   "description": "Accessible tabs and toggle buttons",
   "main": "lib/clic-clac.js",
   "scripts": {
-    "test": "jest",
+    "test": "eslint ./src && jest",
     "dev": "webpack-dev-server --content-base dev --inline --hot",
     "start": "typedoc --out ./doc --module es6 ./src/js/clic-clac.ts && webpack --mode production"
   },
