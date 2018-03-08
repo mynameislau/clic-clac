@@ -31,14 +31,17 @@
     "webpack-cli": "^2.0.9"
   },
   "jest": {
+    "preset": "jest-puppeteer-preset",
     "moduleFileExtensions": [
       "ts",
       "tsx",
       "js"
     ],
-    "roots": ["testing"],
+    "roots": [
+      "integration-tests"
+    ],
     "transform": {
-      "^.+\\.(ts|tsx)$": "./testing/preprocessor.js"
+      "^.+\\.(ts|tsx)$": "./integration-tests/preprocessor.js"
     },
     "testMatch": [
       "**/*.test.(ts|tsx|js)"
@@ -49,7 +52,8 @@
   },
   "dependencies": {
     "core-js": "^2.5.3",
-    "events-polyfill": "^2.0.5"
+    "events-polyfill": "^2.0.5",
+    "jest-puppeteer-preset": "^2.0.0"
   },
   "repository": {
     "type": "git",

@@ -1,0 +1,13 @@
+{
+  "env": {
+    "browser": true,
+    "node": true
+  },
+  "globals": {
+    "page": true
+  },
+  "rules": {
+    "no-underscore-dangle": 0,
+    "max-statements": 0
+  }
+}
