@@ -34,7 +34,7 @@ to specify the tablist that owns the tab.
 Set a `data-expand-default-state` attribtue to true or false if you want
 to specify a default state for this tab
 
-If you only want at least one tab selected at all times, add a `data-at-least-one` attribute to the tablist element with the value `true`.
+If you don't want at least one tab selected at all times, add a `data-at-least-one` attribute to the tablist element with the value `false`.
 
 ## EVENTS
 
