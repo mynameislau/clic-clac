@@ -10,7 +10,7 @@ sudo: false
 branches:
    only:
    - master
-   - cit-test
+   - ci-test
 
 script:
   - npm test
