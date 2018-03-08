@@ -51,5 +51,5 @@ The `detail` property holds infos about the element :
 [travis-url]: https://travis-ci.org/mynameislau/clic-clac
 [github-release-image]: https://img.shields.io/github/release/mynameislau/clic-clac.svg
 [github-release-url]: https://github.com/mynameislau/clic-clac/releases
-[license-image]: https://img.shields.io/npm/l/clic-clac.svg
-[license-url]: https://github.com/mynameislau/clic-clac/master/LICENSE
+[license-image]: https://img.shields.io/badge/License-MIT-yellow.svg
+[license-url]: https://opensource.org/licenses/MIT
