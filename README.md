@@ -1,6 +1,7 @@
 # CLIC - CLAC
 
 [![Dependency status][david-dm-image]][david-dm-url]
+[![Build Status](https://travis-ci.org/mynameislau/clic-clac.svg?branch=master)]
 
 ## EXAMPLES
 
