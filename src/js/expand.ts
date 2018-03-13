@@ -68,6 +68,17 @@ const addController = (expandObj: ExpandData, element: Element) => {
   expandObj.controllerElements.push(element);
 
   element.setAttribute('aria-controls', expandObj.controlledID);
+
+  if (element.nodeName !== 'BUTTON') {
+    element.setAttribute('role', 'button');
+    element.setAttribute('tabindex', '0');
+
+    element.addEventListener('keypress', (event: KeyboardEvent) => {
+      if (event.key === ' ' || event.key === 'Enter') {
+        sendEventUpward(event);
+      }
+    });
+  }
 };
 
 const expandIfAnchored = (expandObj: ExpandData) => {
@@ -81,6 +92,15 @@ const expandIfAnchored = (expandObj: ExpandData) => {
   } catch (error) {
     // Todo
   }
+};
+
+const sendEventUpward = (event: Event) => {
+  const clickEvent = new MouseEvent('click', {
+    view: window,
+    bubbles: true,
+    cancelable: true
+  });
+  event.target.dispatchEvent(clickEvent);
 };
 
 const createExpand = (controllerElement: Element): ExpandData | null => {
@@ -101,7 +121,7 @@ const createExpand = (controllerElement: Element): ExpandData | null => {
     controllerElement.getAttribute('data-expand-default-state') === 'true';
   const controlledRole = controlledElement.getAttribute('role');
 
-  const expandObj = {
+  const expandObj: ExpandData = {
     controllerElements: [],
     controlledElement,
     controlledID,

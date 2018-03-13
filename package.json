@@ -1,6 +1,6 @@
 {
   "name": "clic-clac",
-  "version": "2.3.1",
+  "version": "2.3.2",
   "description": "Accessible tabs and toggle buttons",
   "main": "lib/clic-clac.js",
   "scripts": {
@@ -28,7 +28,8 @@
     "tslint-config-prettier": "^1.9.0",
     "webpack": "^4.0.1",
     "puppeteer": "^1.1.1",
-    "webpack-cli": "^2.0.9"
+    "webpack-cli": "^2.0.9",
+    "jest-puppeteer-preset": "^2.0.0"
   },
   "jest": {
     "preset": "jest-puppeteer-preset",
@@ -52,8 +53,7 @@
   },
   "dependencies": {
     "core-js": "^2.5.3",
-    "events-polyfill": "^2.0.5",
-    "jest-puppeteer-preset": "^2.0.0"
+    "events-polyfill": "^2.0.5"
   },
   "repository": {
     "type": "git",
