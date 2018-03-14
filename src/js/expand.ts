@@ -1,5 +1,7 @@
+
+// @ts-ignore
+import CustomEvent from 'custom-event';
 import queryAll from './query-all';
-import 'events-polyfill';
 import { isOrContains, updateAndDispatch, generateCaughtError } from './utils';
 
 interface ExpandData {
@@ -40,7 +42,7 @@ const refreshState = (expandObj: ExpandData, initialState = false) => {
 
   if (window.requestAnimationFrame) {
     window.requestAnimationFrame(() => {
-      window.dispatchEvent(new Event('resize'));
+      window.dispatchEvent(new CustomEvent('resize'));
     });
   }
 };

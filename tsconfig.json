@@ -1,6 +1,7 @@
 {
   "compileOnSave": true,
   "allowJs": true,
+  "moduleResolution": "Node",
   "target": "es5",
   "compilerOptions": {
     "strictNullChecks": true,

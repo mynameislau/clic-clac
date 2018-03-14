@@ -3,7 +3,6 @@
  * @author mynameislau
  * @url http://github.com/mynameislau/clic-clac
  */
-
 import * as expandInner from './expand';
 import * as tablistInner from './tablist';
 

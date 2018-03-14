@@ -1,3 +1,6 @@
+// @ts-ignore
+import CustomEvent from 'custom-event';
+
 export const isOrContains = (container: Element, element: Element) =>
   container === element || container.contains(element);
 

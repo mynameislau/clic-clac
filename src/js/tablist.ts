@@ -13,7 +13,6 @@
  */
 
 import 'core-js/fn/array/includes';
-import 'events-polyfill';
 import queryAll from './query-all';
 import {
   isOrContains,
@@ -21,6 +20,9 @@ import {
   attributesToArray,
   generateCaughtError
 } from './utils';
+
+// @ts-ignore
+import CustomEvent from 'custom-event';
 
 interface TabData {
   tabElement: Element;
@@ -310,7 +312,9 @@ const createTablist = (tablistElement: Element): TablistData | null => {
     tablistID,
     tabs,
     keepOneTabSelected:
-      tablistElement.getAttribute('data-at-least-one') === 'false' ? false : true,
+      tablistElement.getAttribute('data-at-least-one') === 'false'
+        ? false
+        : true,
     multiselectable:
       tablistElement.getAttribute('data-multiselectable') === 'true',
     tablistElement,
