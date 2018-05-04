@@ -36,6 +36,8 @@ to specify a default state for this tab
 
 If you don't want at least one tab selected at all times, add a `data-at-least-one` attribute to the tablist element with the value `false`.
 
+If you want your content to collapse when you click outside of the area, add a `data-click-outside` attribute with the `deselect` value.
+
 ## EVENTS
 
 Every time  an attribute is modified, a custom `clic-clac-state-update` event is dispatched on the element whose attribute changed.

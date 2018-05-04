@@ -18,7 +18,8 @@ import {
   isOrContains,
   updateAndDispatch,
   attributesToArray,
-  generateCaughtError
+  generateCaughtError,
+  switchAElementToButton
 } from './utils';
 
 // @ts-ignore
@@ -264,32 +265,13 @@ const createTab = (
   };
 };
 
-const switchElementType = (tabElement: Element) => {
-  if (tabElement.nodeName === 'A') {
-    const buttonElement = document.createElement('button');
-    const attributes = attributesToArray(tabElement.attributes);
-    attributes.forEach(attr =>
-      buttonElement.setAttributeNode(attr.cloneNode(true) as Attr)
-    );
-    buttonElement.innerHTML = tabElement.innerHTML;
-    buttonElement.removeAttribute('href');
-    buttonElement.setAttribute('type', 'button');
-    const tabParent = tabElement.parentElement as HTMLElement;
-    tabParent.insertBefore(buttonElement, tabElement);
-    tabParent.removeChild(tabElement);
-    return buttonElement;
-  } else {
-    return tabElement;
-  }
-};
-
 const createTablist = (tablistElement: Element): TablistData | null => {
   const tablistID =
     tablistElement.getAttribute('data-tablist') ||
     tablistElement.getAttribute('id');
 
   const tabElements = queryAll(`[data-owner="${tablistID}"]`).map(
-    switchElementType
+    switchAElementToButton
   );
 
   if (tablistID === null) {

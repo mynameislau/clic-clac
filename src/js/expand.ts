@@ -1,8 +1,12 @@
-
 // @ts-ignore
 import CustomEvent from 'custom-event';
 import queryAll from './query-all';
-import { isOrContains, updateAndDispatch, generateCaughtError } from './utils';
+import {
+  isOrContains,
+  updateAndDispatch,
+  generateCaughtError,
+  switchAElementToButton
+} from './utils';
 
 interface ExpandData {
   controllerElements: Element[];
@@ -38,6 +42,14 @@ const refreshState = (expandObj: ExpandData, initialState = false) => {
     expandObj.expanded ? 'true' : 'false'
   );
 
+  if (expandObj.controlledElement.nodeName === 'DIALOG') {
+    updateAndDispatch(
+      expandObj.controlledElement,
+      'open',
+      expandObj.expanded ? 'true' : null
+    );
+  }
+
   setIsInitialState(expandObj.controlledElement, initialState);
 
   if (window.requestAnimationFrame) {
@@ -67,8 +79,9 @@ const changeExpandedState = (expandObj: ExpandData) => {
 };
 
 const addController = (expandObj: ExpandData, element: Element) => {
-  expandObj.controllerElements.push(element);
+  element = switchAElementToButton(element);
 
+  expandObj.controllerElements.push(element);
   element.setAttribute('aria-controls', expandObj.controlledID);
 
   if (element.nodeName !== 'BUTTON') {
@@ -102,6 +115,11 @@ const sendEventUpward = (event: Event) => {
     bubbles: true,
     cancelable: true
   });
+
+  if (event.target === null) {
+    return generateCaughtError('event target is null', null);
+  }
+
   event.target.dispatchEvent(clickEvent);
 };
 
