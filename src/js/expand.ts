@@ -14,6 +14,7 @@ interface ExpandData {
   controlledID: string;
   defaultState: boolean;
   expanded: boolean;
+  clickOutside: string;
 }
 
 const expandObjects: ExpandData[] = [];
@@ -78,6 +79,14 @@ const changeExpandedState = (expandObj: ExpandData) => {
   preventScrollToAnchor(expandObj);
 };
 
+const deselect = (expandObj: ExpandData) => {
+  expandObj.expanded = false;
+
+  refreshState(expandObj);
+
+  preventScrollToAnchor(expandObj);
+};
+
 const addController = (expandObj: ExpandData, element: Element) => {
   element = switchAElementToButton(element);
 
@@ -104,7 +113,8 @@ const expandIfAnchored = (expandObj: ExpandData) => {
     ) {
       changeExpandedState(expandObj);
     }
-  } catch (error) {
+  }
+  catch (error) {
     // Todo
   }
 };
@@ -137,16 +147,20 @@ const createExpand = (controllerElement: Element): ExpandData | null => {
     );
   }
 
-  const defaultState =
-    controllerElement.getAttribute('data-expand-default-state') === 'true';
+  const defaultState
+    = controllerElement.getAttribute('data-expand-default-state') === 'true';
   const controlledRole = controlledElement.getAttribute('role');
+
+  const clickOutside
+    = controlledElement.getAttribute('data-click-outside') || '';
 
   const expandObj: ExpandData = {
     controllerElements: [],
     controlledElement,
     controlledID,
     defaultState,
-    expanded: defaultState
+    expanded: defaultState,
+    clickOutside
   };
 
   const controllerElements = expandObj.controllerElements;
@@ -159,12 +173,21 @@ const createExpand = (controllerElement: Element): ExpandData | null => {
   window.document.documentElement.addEventListener('click', event => {
     const controllerElem = controllerElements.reduce(
       (prev, curr) =>
-        isOrContains(curr, event.target as Element) ? curr : prev,
+        (isOrContains(curr, event.target as Element) ? curr : prev),
       null
     );
 
     if (controllerElem) {
       changeExpandedState(expandObj);
+    }
+
+    const isControlledElm = isOrContains(
+      controlledElement,
+      event.target as Element
+    );
+
+    if (!controllerElem && !isControlledElm && clickOutside === 'deselect') {
+      deselect(expandObj);
     }
   });
 
@@ -183,13 +206,11 @@ export const getExpandObj = (id: string, list: ExpandData[]) =>
   list.reduce((acc, val) => {
     if (acc) {
       return acc;
-    } else {
-      if (val.controlledID === id) {
-        return val;
-      } else {
-        return null;
-      }
     }
+    if (val.controlledID === id) {
+      return val;
+    }
+    return null;
   }, null);
 
 export const addExpand = (controllerElement: Element) => {
@@ -203,7 +224,8 @@ export const addExpand = (controllerElement: Element) => {
 
   if (expandObj) {
     addController(expandObj, controllerElement);
-  } else {
+  }
+  else {
     const newExpand = createExpand(controllerElement);
     if (newExpand) {
       expandObjects.push(newExpand);

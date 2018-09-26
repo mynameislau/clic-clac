@@ -30,7 +30,7 @@
       display: inline;
     }
 
-    #expand-test[aria-expanded="true"] {
+    #expand-test[aria-expanded="false"] {
       opacity: 0;
     }
   
@@ -84,7 +84,7 @@
               <a href="#expand-test" data-expand data-controls="expand-test">Press me (link)</a>
               <button data-expand data-controls="expand-test">Press me (button)</button>
             </p>
-            <p id="expand-test" data-jquery-expand>
+            <p id="expand-test" data-click-outside="deselect" data-jquery-expand>
               Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aspernatur assumenda, cumque dolore fugit in, a voluptatibus dicta
               facilis sequi illo iusto maxime unde ad nihil nostrum adipisci deserunt inventore optio.
             </p>

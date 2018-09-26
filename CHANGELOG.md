@@ -1,5 +1,13 @@
 # Changelog
 
+## v2.3.0 (05/03/2018)
+- [Improved error management in Expand](https://api.github.com/repos/mynameislau/clic-clac/git/commits/d8118862e3c4da1e625f2e55ae142e0d2673fd97) - @mynameislau
+- [Improved error management](https://api.github.com/repos/mynameislau/clic-clac/git/commits/be3977069c7803955ed33449918fef61d4a61e21) - @mynameislau
+- [improved documentation](https://api.github.com/repos/mynameislau/clic-clac/git/commits/6ed3ac48deb221ba59b8c6e6ffa592f097384517) - @mynameislau
+- [improved documentation](https://api.github.com/repos/mynameislau/clic-clac/git/commits/6a89f9e07264e1dc6bd5d9abb170eff2592f440e) - @mynameislau
+
+---
+
 ## v2.2.0 (02/03/2018)
 - [Library can now replace a tags with button tags](https://api.github.com/repos/mynameislau/clic-clac/git/commits/a5e44853924e436e54da5746db117a8903a34470) - @mynameislau
 - [typescript ok](https://api.github.com/repos/mynameislau/clic-clac/git/commits/393ca071d4a62cfdb2e97004ff0ff6d68388ede7) - @mynameislau

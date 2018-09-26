@@ -4,6 +4,7 @@
   "description": "Accessible tabs and toggle buttons",
   "main": "lib/clic-clac.js",
   "scripts": {
+    "changelog": "gren changelog --generate",
     "test": "eslint ./src && jest",
     "dev": "webpack-dev-server --content-base dev --inline --hot",
     "start": "typedoc --out ./doc --module es6 ./src/js/clic-clac.ts && webpack --mode production"
@@ -11,6 +12,7 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "github-release-notes": "0.16.0",
     "@types/jest": "^22.2.0",
     "jest": "^22.4.2",
     "eslint": "^4.9.0",
