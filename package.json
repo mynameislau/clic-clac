@@ -1,10 +1,10 @@
 {
   "name": "clic-clac",
-  "version": "2.5.1",
+  "version": "2.5.2",
   "description": "Accessible tabs and toggle buttons",
   "main": "lib/clic-clac.js",
   "scripts": {
-    "changelog": "gren changelog --generate",
+    "changelog": "gren changelog --generate --override",
     "test": "eslint ./src && jest",
     "dev": "webpack-dev-server --mode development --content-base dev --inline --hot",
     "start": "typedoc --excludeNotExported --ignoreCompilerErrors --module es6 --out ./doc ./src/js/clic-clac.ts && webpack --mode production"
