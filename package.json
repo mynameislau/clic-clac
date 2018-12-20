@@ -1,37 +1,37 @@
 {
   "name": "clic-clac",
-  "version": "2.5.0",
+  "version": "2.5.1",
   "description": "Accessible tabs and toggle buttons",
   "main": "lib/clic-clac.js",
   "scripts": {
     "changelog": "gren changelog --generate",
     "test": "eslint ./src && jest",
-    "dev": "webpack-dev-server --content-base dev --inline --hot",
-    "start": "typedoc --out ./doc --module es6 ./src/js/clic-clac.ts && webpack --mode production"
+    "dev": "webpack-dev-server --mode development --content-base dev --inline --hot",
+    "start": "typedoc --excludeNotExported --ignoreCompilerErrors --module es6 --out ./doc ./src/js/clic-clac.ts && webpack --mode production"
   },
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@babel/core": "7.2.2",
+    "@babel/preset-env": "7.2.0",
+    "@babel/preset-typescript": "7.1.0",
+    "@types/jest": "22.2.0",
+    "babel-loader": "8.0.4",
+    "eslint": "4.9.0",
     "github-release-notes": "0.16.0",
-    "@types/jest": "^22.2.0",
-    "jest": "^22.4.2",
-    "eslint": "^4.9.0",
-    "uglifyjs-webpack-plugin": "^1.2.2",
-    "@babel/core": "^7.0.0-beta.40",
-    "@babel/preset-env": "^7.0.0-beta.40",
-    "@babel/preset-es2015": "^7.0.0-beta.40",
-    "@babel/preset-stage-0": "7.0.0-beta.40",
-    "@babel/preset-typescript": "^7.0.0-beta.40",
-    "babel-loader": "^8.0.0-beta.0",
-    "typescript": "^2.7.2",
-    "tslint": "^5.9.1",
-    "prettier": "^1.11.1",
-    "tslint-plugin-prettier": "^1.3.0",
-    "tslint-config-prettier": "^1.9.0",
-    "webpack": "^4.0.1",
-    "puppeteer": "^1.1.1",
-    "webpack-cli": "^2.0.9",
-    "jest-puppeteer-preset": "^2.0.0"
+    "jest": "22.4.2",
+    "jest-puppeteer-preset": "2.0.0",
+    "prettier": "1.11.1",
+    "puppeteer": "1.1.1",
+    "tslint": "5.9.1",
+    "tslint-config-prettier": "1.9.0",
+    "tslint-plugin-prettier": "1.3.0",
+    "typedoc": "0.13.0",
+    "typescript": "3.1.6",
+    "uglifyjs-webpack-plugin": "1.2.2",
+    "webpack": "4.0.1",
+    "webpack-cli": "2.0.9",
+    "webpack-dev-server": "3.1.10"
   },
   "jest": {
     "preset": "jest-puppeteer-preset",
@@ -44,7 +44,7 @@
       "integration-tests"
     ],
     "transform": {
-      "^.+\\.(ts|tsx)$": "./integration-tests/preprocessor.js"
+      ".+\\.(ts|tsx)$": "./integration-tests/preprocessor.js"
     },
     "testMatch": [
       "**/*.test.(ts|tsx|js)"
@@ -54,8 +54,8 @@
     "lib": "lib"
   },
   "dependencies": {
-    "core-js": "^2.5.3",
-    "custom-event": "~1.0.1"
+    "core-js": "2.5.3",
+    "custom-event": "1.0.1"
   },
   "repository": {
     "type": "git",

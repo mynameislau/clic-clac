@@ -6,7 +6,7 @@ module.exports = {
   output: {
     path: path.resolve(__dirname, 'lib'),
     filename: 'clic-clac.js',
-    library: 'clic-clac',
+    library: 'clicClac',
     libraryTarget: 'umd'
   },
   resolve: {
