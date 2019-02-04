@@ -15,10 +15,11 @@ import `clic-clac` in your main js file (or simply embed it via a `<script>` tag
 
 ## EXPAND
 
- Put `data-expand` on the button controlling the expand of an element
-`data-controls="idOfTheControlledElement"` tells the lib which element this button is controlling  
-`data-expand-default-state`sets the default aria state of the element
-If you want your content to collapse when you click outside of the area, add a `data-click-outside` attribute with the `deselect` value to the **controlled** element.
+- Add `data-expand` on the button controlling the expand of an element
+- `data-controls="idOfTheControlledElement"` tells the lib which element this button is controlling  
+  This can be a list of ids separated by spaces.
+- `data-expand-default-state` sets the default aria state of the element
+- If you want your content to collapse when you click outside of the area, add a `data-click-outside` attribute with   the `deselect` value to the **controlled** element.
 
 ## TABLIST
 

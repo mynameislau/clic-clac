@@ -91,7 +91,8 @@ const addController = (expandObj: ExpandData, element: Element) => {
   element = switchAElementToButton(element);
 
   expandObj.controllerElements.push(element);
-  element.setAttribute('aria-controls', expandObj.controlledID);
+  const previousAriaControls = element.getAttribute('aria-controls') ? `${element.getAttribute('aria-controls')} ` : '';
+  element.setAttribute('aria-controls', `${previousAriaControls}${expandObj.controlledID}`);
 
   if (element.nodeName !== 'BUTTON') {
     element.setAttribute('role', 'button');
@@ -133,11 +134,7 @@ const sendEventUpward = (event: Event) => {
   event.target.dispatchEvent(clickEvent);
 };
 
-const createExpand = (controllerElement: Element): ExpandData | null => {
-  const controlledID = controllerElement.getAttribute('data-controls');
-  if (controlledID === null) {
-    return generateCaughtError('data-controls attribute error', null);
-  }
+const createExpand = (controllerElement: Element, controlledID: string): ExpandData | null => {
   const controlledElement = window.document.getElementById(controlledID);
 
   if (controlledElement === null) {
@@ -202,6 +199,18 @@ const createExpand = (controllerElement: Element): ExpandData | null => {
   return expandObj;
 };
 
+const getControlledIDS = (controllerElement: Element) => {
+  const IDString = controllerElement.getAttribute('data-controls');
+
+  if (IDString === null) {
+    return generateCaughtError('no data-controls attribute', []);
+  }
+
+  const IDs = IDString.split(' ');
+
+  return IDs;
+};
+
 export const getExpandObj = (id: string, list: ExpandData[]) =>
   list.reduce((acc, val) => {
     if (acc) {
@@ -214,23 +223,21 @@ export const getExpandObj = (id: string, list: ExpandData[]) =>
   }, null);
 
 export const addExpand = (controllerElement: Element) => {
-  const ID = controllerElement.getAttribute('data-controls');
+  const IDs = getControlledIDS(controllerElement);
 
-  if (ID === null) {
-    return generateCaughtError('no data-controls attribute', null);
-  }
-
-  const expandObj = getExpandObj(ID, expandObjects);
-
-  if (expandObj) {
-    addController(expandObj, controllerElement);
-  }
-  else {
-    const newExpand = createExpand(controllerElement);
-    if (newExpand) {
-      expandObjects.push(newExpand);
+  IDs.forEach(ID => {
+    const expandObj = getExpandObj(ID, expandObjects);
+  
+    if (expandObj) {
+      addController(expandObj, controllerElement);
     }
-  }
+    else {
+      const newExpand = createExpand(controllerElement, ID);
+      if (newExpand) {
+        expandObjects.push(newExpand);
+      }
+    }
+  });
 };
 
 queryAll('[data-expand]').forEach(addExpand);

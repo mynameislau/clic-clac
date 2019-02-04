@@ -30,6 +30,10 @@
       display: inline;
     }
 
+    .simple-togglable-element[aria-expanded="false"] {
+      display: none;
+    }
+
     #expand-test[aria-expanded="false"] {
       opacity: 0;
     }
@@ -87,6 +91,15 @@
             <p id="expand-test" data-click-outside="deselect" data-jquery-expand>
               Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aspernatur assumenda, cumque dolore fugit in, a voluptatibus dicta
               facilis sequi illo iusto maxime unde ad nihil nostrum adipisci deserunt inventore optio.
+            </p>
+            <hr/>
+            <p>
+              You can expand multiple elements
+              <div>
+                <button data-expand data-controls="firstElement secondElement">Click</button>
+              </div>
+              <div id="firstElement" class="simple-togglable-element">First Element</div>
+              <div id="secondElement" class="simple-togglable-element">Second Element</div>
             </p>
             <hr/>
             <p>
