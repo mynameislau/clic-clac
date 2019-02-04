@@ -4,7 +4,8 @@
   "description": "Accessible tabs and toggle buttons",
   "main": "lib/clic-clac.js",
   "scripts": {
-    "changelog": "gren changelog --generate --override",
+    "release": "gren release --data-source=commits --override",
+    "changelog": "gren changelog --data-source=commits --override",
     "test": "eslint ./src && jest",
     "dev": "webpack-dev-server --mode development --content-base dev --inline --hot",
     "start": "typedoc --excludeNotExported --ignoreCompilerErrors --module es6 --out ./doc ./src/js/clic-clac.ts && webpack --mode production"
