@@ -34,7 +34,7 @@
       display: none;
     }
 
-    #expand-test[aria-expanded="false"] {
+    .expand-test[aria-expanded="false"] {
       opacity: 0;
     }
   
@@ -85,10 +85,10 @@
             <p>Works with various inputs : simple divs, buttons, and links, which are replaced by buttons at runtime.</p>
             <p>
               <div class="fake-button" data-expand data-controls="expand-test">Press me(div)</div>
-              <a href="#expand-test" data-expand data-controls="expand-test">Press me (link)</a>
+              <a href="." data-expand data-controls="expand-test">Press me (link)</a>
               <button data-expand data-controls="expand-test">Press me (button)</button>
             </p>
-            <p id="expand-test" data-click-outside="deselect" data-jquery-expand>
+            <p id="expand-test" class="expand-test" data-click-outside="deselect" data-jquery-expand>
               Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aspernatur assumenda, cumque dolore fugit in, a voluptatibus dicta
               facilis sequi illo iusto maxime unde ad nihil nostrum adipisci deserunt inventore optio.
             </p>
@@ -144,6 +144,23 @@
           </section>
         </section>
       </div>
+  <script>
+    /*for (let i = 0; i < 500; i++) {
+      const truc = document.createElement('div');
+      truc.innerHTML = `
+        <p>
+          <div class="fake-button" data-expand data-controls="expand-test${i}">Press me(div)</div>
+          <a href="." data-expand data-controls="expand-test${i}">Press me (link)</a>
+          <button data-expand data-controls="expand-test${i}">Press me (button)</button>
+        </p>
+        <p class="expand-test" id="expand-test${i}" data-click-outside="deselect" data-jquery-expand>
+          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aspernatur assumenda, cumque dolore fugit in, a voluptatibus dicta
+          facilis sequi illo iusto maxime unde ad nihil nostrum adipisci deserunt inventore optio.
+        </p>
+      `;
+      document.body.appendChild(truc);
+    }*/
+  </script>
   <script src="lib/clic-clac.js"></script>
 </body>
 

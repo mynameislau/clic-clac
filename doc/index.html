@@ -72,9 +72,12 @@
 				<h2 id="how-to-use">HOW TO USE</h2>
 				<p>import <code>clic-clac</code> in your main js file (or simply embed it via a <code>&lt;script&gt;</code> tag)</p>
 				<h2 id="expand">EXPAND</h2>
-				<p> Put <code>data-expand</code> on the button controlling the expand of an element
-					<code>data-controls=&quot;idOfTheControlledElement&quot;</code> tells the lib which element this button is controlling<br><code>data-expand-default-state</code>sets the default aria state of the element
-				If you want your content to collapse when you click outside of the area, add a <code>data-click-outside</code> attribute with the <code>deselect</code> value to the <strong>controlled</strong> element.</p>
+				<ul>
+					<li>Add <code>data-expand</code> on the button controlling the expand of an element</li>
+					<li><code>data-controls=&quot;idOfTheControlledElement&quot;</code> tells the lib which element this button is controlling<br>This can be a list of ids separated by spaces.</li>
+					<li><code>data-expand-default-state</code> sets the default aria state of the element</li>
+					<li>If you want your content to collapse when you click outside of the area, add a <code>data-click-outside</code> attribute with   the <code>deselect</code> value to the <strong>controlled</strong> element.</li>
+				</ul>
 				<h2 id="tablist">TABLIST</h2>
 				<p>Set a <code>data-tablist</code> attribute on the element that will be the tablist,
 					the value of the attribute

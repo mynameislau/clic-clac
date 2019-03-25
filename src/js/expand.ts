@@ -7,6 +7,7 @@ import {
   generateCaughtError,
   switchAElementToButton
 } from './utils';
+import { request } from 'https';
 
 interface ExpandData {
   controllerElements: Element[];
@@ -18,6 +19,20 @@ interface ExpandData {
 }
 
 const expandObjects: ExpandData[] = [];
+
+let resizeRequested = false;
+const requestResize = () => {
+  if (!resizeRequested) {
+    resizeRequested = true;
+    if (window.requestAnimationFrame) {
+      window.requestAnimationFrame(() => {
+        window.dispatchEvent(new CustomEvent('resize'));
+        console.log('resize');
+        resizeRequested = false;
+      });
+    }
+  }
+};
 
 const setIsInitialState = (element: Element, initialState = false) => {
   updateAndDispatch(
@@ -53,11 +68,7 @@ const refreshState = (expandObj: ExpandData, initialState = false) => {
 
   setIsInitialState(expandObj.controlledElement, initialState);
 
-  if (window.requestAnimationFrame) {
-    window.requestAnimationFrame(() => {
-      window.dispatchEvent(new CustomEvent('resize'));
-    });
-  }
+  requestResize();
 };
 
 const preventScrollToAnchor = (expandObj: ExpandData) => {
@@ -76,7 +87,7 @@ const changeExpandedState = (expandObj: ExpandData) => {
 
   refreshState(expandObj);
 
-  preventScrollToAnchor(expandObj);
+  // preventScrollToAnchor(expandObj);
 };
 
 const deselect = (expandObj: ExpandData) => {
@@ -84,7 +95,7 @@ const deselect = (expandObj: ExpandData) => {
 
   refreshState(expandObj);
 
-  preventScrollToAnchor(expandObj);
+  // preventScrollToAnchor(expandObj);
 };
 
 const addController = (expandObj: ExpandData, element: Element) => {
