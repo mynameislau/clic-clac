@@ -7,6 +7,11 @@ node_js:
 
 sudo: false
 
+branches:
+   only:
+   - master
+   - ci-test
+
 script:
   - npm test
 
