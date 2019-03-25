@@ -27,7 +27,6 @@ const requestResize = () => {
     if (window.requestAnimationFrame) {
       window.requestAnimationFrame(() => {
         window.dispatchEvent(new CustomEvent('resize'));
-        console.log('resize');
         resizeRequested = false;
       });
     }
