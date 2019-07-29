@@ -22,6 +22,21 @@ export const updateState = (
   }
 };
 
+export const htmlCollectionToArray = (
+  list: HTMLCollection
+): Element[] => {
+  const toReturn = [];
+
+  /* tslint:disable:prefer-for-of */
+  for (let index = 0; index < list.length; index++) {
+    /* tslint:enable*/
+    const element = list[index];
+    toReturn.push(element);
+  }
+
+  return toReturn;
+};
+
 export const attributesToArray = (map: NamedNodeMap) => {
   const results: Attr[] = [];
   /* tslint:disable */

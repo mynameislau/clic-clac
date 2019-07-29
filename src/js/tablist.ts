@@ -19,7 +19,8 @@ import {
   updateAndDispatch,
   attributesToArray,
   generateCaughtError,
-  switchAElementToButton
+  switchAElementToButton,
+  htmlCollectionToArray
 } from './utils';
 
 // @ts-ignore
@@ -205,6 +206,13 @@ const addTablistAttributes = (tablist: TablistData) => {
     'aria-owns',
     tablist.tabs.map(tab => tab.tabID).reduce(concatWithSpace)
   );
+
+  // if the tablist element has descendant <li> elements, add a presentation role to them
+  htmlCollectionToArray(tablist.tablistElement.children).forEach(element => {
+    if (element.tagName === 'LI') {
+      element.setAttribute('role', 'presentation');
+    }
+  });
 };
 
 const initTablist = (tablist: TablistData) => {
@@ -234,6 +242,8 @@ const initTablist = (tablist: TablistData) => {
   return tablist;
 };
 
+const getTabPanelID = (tabElement: Element) => tabElement.getAttribute('data-tab-for');
+
 const createTab = (
   tabElement: Element,
   tablistID: string,
@@ -242,7 +252,7 @@ const createTab = (
   const selected =
     tabElement.getAttribute('data-expand-default-state') === 'true';
   const defaultState = selected;
-  const tabPanelID = tabElement.getAttribute('data-tab-for');
+  const tabPanelID = getTabPanelID(tabElement);
 
   if (tabPanelID === null) {
     return generateCaughtError('data-tab-for attribute missing', null);
@@ -270,15 +280,29 @@ const createTablist = (tablistElement: Element): TablistData | null => {
     tablistElement.getAttribute('data-tablist') ||
     tablistElement.getAttribute('id');
 
-  const tabElements = queryAll(`[data-owner="${tablistID}"]`).map(
-    switchAElementToButton
-  );
+  const tabElements = queryAll(`[data-owner="${tablistID}"]`);
+  tabElements.forEach(element => {
+    const tabPanelID = getTabPanelID(element);
+    if (tabPanelID === null) {
+      const hrefVal = element.getAttribute('href');
+      const result = hrefVal ? /^#(.*)/.exec(hrefVal) : null;
+      if (result && result[1]) {
+        element.setAttribute('data-tab-for', result[1]);
+      }
+    }
+  });
+  
+  const replacedElements: Element[] = [];
+  tabElements.forEach(element => {
+    const replaced = switchAElementToButton(element);
+    replacedElements.push(replaced);
+  });
 
   if (tablistID === null) {
     return generateCaughtError('tablist id could not be determined', null);
   }
 
-  const tabs = tabElements.reduce(
+  const tabs = replacedElements.reduce(
     (acc, tabElement, index) => {
       const maybeTab = createTab(tabElement, tablistID, index);
       if (maybeTab === null) {

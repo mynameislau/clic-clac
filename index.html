@@ -2,6 +2,7 @@
 <html lang="en">
 
 <head>
+  <title>Clic-clac Demo</title>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
@@ -142,6 +143,26 @@
               </div>
             </div>
           </section>
+          <section>
+            <h3>Menu example</h3>
+            <ul id="menu" data-tablist data-at-least-one="false" data-click-outside="deselect">
+              <li>
+                <a href="#first-menu-item" data-owner="menu">First</a>
+                <ul class="tab-content" id="first-menu-item">
+                  <li>one</li>
+                  <li>two</li>
+                  <li>three</li>
+                </ul>
+              </li>
+              <li>
+                <a href="#second-menu-item" data-owner="menu">Second</a>
+                <ul class="tab-content" id="second-menu-item">
+                  <li>one</li>
+                  <li>two</li>
+                  <li>three</li>
+                </ul>
+              </li>
+            </ul>
         </section>
       </div>
   <script>

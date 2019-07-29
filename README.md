@@ -28,7 +28,7 @@ the value of the attribute
 is the name of the tablist, you can leave it blank and use
 the id attribute (used to fill the aria-owns attribute later)
 You can specify if the tablist is multiselectable with the *data-multiselectable* attribute.
-On each tab button, set a `data-tab-for` attribute which value is the id
+On each tab button, set a `data-tab-for` attribute which value is the id. If your tab button is a link (`<a>`), you can juste specify the id with an anchor link (`href="#xy"`).
 of the controlled tab panel.  
 Set a `data-owner` attribute 
 to specify the tablist that owns the tab.  
