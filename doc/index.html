@@ -62,36 +62,48 @@
 	<div class="row">
 		<div class="col-8 col-content">
 			<div class="tsd-panel tsd-typography">
-				<h1 id="clic-clac">CLIC - CLAC</h1>
+				<a href="#clic---clac" id="clic---clac" style="color: inherit; text-decoration: none;">
+					<h1>CLIC - CLAC</h1>
+				</a>
 				<p><a href="https://opensource.org/licenses/MIT"><img src="https://img.shields.io/badge/License-MIT-yellow.svg" alt="License"></a>
 					<a href="https://github.com/mynameislau/clic-clac/releases"><img src="https://img.shields.io/github/release/mynameislau/clic-clac.svg" alt="GitHub Release"></a>
 					<a href="https://david-dm.org/mynameislau/clic-clac"><img src="https://img.shields.io/david/mynameislau/clic-clac.svg" alt="Dependency status"></a>
 				<a href="https://travis-ci.org/mynameislau/clic-clac"><img src="https://travis-ci.org/mynameislau/clic-clac.svg?branch=master" alt="Build Status"></a></p>
-				<h2 id="examples">EXAMPLES</h2>
+				<a href="#examples" id="examples" style="color: inherit; text-decoration: none;">
+					<h2>EXAMPLES</h2>
+				</a>
 				<p><a href="http://mynameislau.github.io/clic-clac">http://mynameislau.github.io/clic-clac</a></p>
-				<h2 id="how-to-use">HOW TO USE</h2>
+				<a href="#how-to-use" id="how-to-use" style="color: inherit; text-decoration: none;">
+					<h2>HOW TO USE</h2>
+				</a>
 				<p>import <code>clic-clac</code> in your main js file (or simply embed it via a <code>&lt;script&gt;</code> tag)</p>
-				<h2 id="expand">EXPAND</h2>
+				<a href="#expand" id="expand" style="color: inherit; text-decoration: none;">
+					<h2>EXPAND</h2>
+				</a>
 				<ul>
 					<li>Add <code>data-expand</code> on the button controlling the expand of an element</li>
 					<li><code>data-controls=&quot;idOfTheControlledElement&quot;</code> tells the lib which element this button is controlling<br>This can be a list of ids separated by spaces.</li>
 					<li><code>data-expand-default-state</code> sets the default aria state of the element</li>
 					<li>If you want your content to collapse when you click outside of the area, add a <code>data-click-outside</code> attribute with   the <code>deselect</code> value to the <strong>controlled</strong> element.</li>
 				</ul>
-				<h2 id="tablist">TABLIST</h2>
+				<a href="#tablist" id="tablist" style="color: inherit; text-decoration: none;">
+					<h2>TABLIST</h2>
+				</a>
 				<p>Set a <code>data-tablist</code> attribute on the element that will be the tablist,
 					the value of the attribute
 					is the name of the tablist, you can leave it blank and use
 					the id attribute (used to fill the aria-owns attribute later)
 					You can specify if the tablist is multiselectable with the <em>data-multiselectable</em> attribute.
-					On each tab button, set a <code>data-tab-for</code> attribute which value is the id
+					On each tab button, set a <code>data-tab-for</code> attribute which value is the id. If your tab button is a link (<code>&lt;a&gt;</code>), you can juste specify the id with an anchor link (<code>href=&quot;#xy&quot;</code>).
 					of the controlled tab panel.<br>Set a <code>data-owner</code> attribute
 				to specify the tablist that owns the tab.  </p>
 				<p>Set a <code>data-expand-default-state</code> attribtue to true or false if you want
 				to specify a default state for this tab</p>
 				<p>If you don&#39;t want at least one tab selected at all times, add a <code>data-at-least-one</code> attribute to the tablist element with the value <code>false</code>.</p>
 				<p>If you want your content to collapse when you click outside of the area, add a <code>data-click-outside</code> attribute with the <code>deselect</code> value.</p>
-				<h2 id="events">EVENTS</h2>
+				<a href="#events" id="events" style="color: inherit; text-decoration: none;">
+					<h2>EVENTS</h2>
+				</a>
 				<p>Every time  an attribute is modified, a custom <code>clic-clac-state-update</code> event is dispatched on the element whose attribute changed.
 					You can use this event as a hook to add custom js behaviours.
 				The <code>detail</code> property holds infos about the element : </p>
@@ -150,6 +162,7 @@
 				<li class="tsd-kind-function tsd-has-type-parameter"><span class="tsd-kind-icon">Function with type parameter</span></li>
 				<li class="tsd-kind-index-signature"><span class="tsd-kind-icon">Index signature</span></li>
 				<li class="tsd-kind-type-alias"><span class="tsd-kind-icon">Type alias</span></li>
+				<li class="tsd-kind-type-alias tsd-has-type-parameter"><span class="tsd-kind-icon">Type alias with type parameter</span></li>
 			</ul>
 			<ul class="tsd-legend">
 				<li class="tsd-kind-enum"><span class="tsd-kind-icon">Enumeration</span></li>
@@ -198,7 +211,7 @@
 	</div>
 </footer>
 <div class="container tsd-generator">
-	<p>Generated using <a href="http://typedoc.org/" target="_blank">TypeDoc</a></p>
+	<p>Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a></p>
 </div>
 <div class="overlay"></div>
 <script src="assets/js/main.js"></script>

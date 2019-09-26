@@ -1,5 +1,9 @@
 # Changelog
 
+## v2.7.0 (29/07/2019)
+v2.7.0
+---
+
 ## v2.6.2 (29/07/2019)
 - [remove console log](https://github.com/mynameislau/clic-clac/commit/046b9370d99800057a0642ac41cb5181eb3e34c5) - @mynameislau
 

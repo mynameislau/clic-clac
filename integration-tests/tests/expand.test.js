@@ -47,4 +47,30 @@ describe('expand tests', () => {
 
     expect(newExpandValue).toBe('true');
   });
+
+  it('should be able to be removed', async () => {
+    page.goto(`file://${path.resolve('./index.html')}`);
+    expect.assertions(2);
+
+    await eventToPromise(page.on.bind(page, ['load']));
+
+    const expandValue = await page.evaluate(() => {
+      return document
+        .querySelector('#expand-test')
+        .getAttribute('aria-expanded');
+    });
+
+    expect(expandValue).toBe('false');
+
+    const afterDelete = await page.evaluate(() => {
+      const testElm = document
+        .querySelector('#expand-test');
+
+      window.clicClac.expand.removeExpand(testElm);
+
+      return testElm.getAttribute('aria-expanded');
+    });
+
+    expect(afterDelete).toBeFalsy();
+  });
 });
