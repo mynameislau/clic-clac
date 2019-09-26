@@ -255,7 +255,7 @@ const createTab = (
   const tabPanelID = getTabPanelID(tabElement);
 
   if (tabPanelID === null) {
-    return generateCaughtError('data-tab-for attribute missing', null);
+    return generateCaughtError('data-tab-for attribute missing or href value is incorrect', null);
   }
 
   const tabPanelElement = window.document.getElementById(tabPanelID);
