@@ -1,7 +1,12 @@
 # Changelog
 
+## v2.6.2 (29/07/2019)
+- [remove console log](https://github.com/mynameislau/clic-clac/commit/046b9370d99800057a0642ac41cb5181eb3e34c5) - @mynameislau
+
+---
+
 ## v2.6.0 (04/02/2019)
-*No changelog for this release.*
+- [you can now add multiple ids to data-controls in expand](https://github.com/mynameislau/clic-clac/commit/28985644b57b6e95db165bd9d0318fdfc9efbfc5) - @mynameislau
 
 ---
 

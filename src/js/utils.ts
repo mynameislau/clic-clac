@@ -22,6 +22,9 @@ export const updateState = (
   }
 };
 
+export const findFirstFocusableDescendant = (container: Element) =>
+  container.querySelector('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])');
+
 export const htmlCollectionToArray = (
   list: HTMLCollection
 ): Element[] => {
