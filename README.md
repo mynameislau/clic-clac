@@ -3,6 +3,7 @@
 [![License][license-image]][license-url]
 [![GitHub Release][github-release-image]][github-release-url]
 [![Dependency status][david-dm-image]][david-dm-url]
+[![GZipped size][gzipped-size]][david-dm-url]
 [![Build Status][travis-image]][travis-url]
 
 ## EXAMPLES
@@ -66,6 +67,7 @@ The `detail` property holds infos about the element :
 [david-dm-url]: https://david-dm.org/mynameislau/clic-clac
 [travis-image]: https://travis-ci.org/mynameislau/clic-clac.svg?branch=master
 [travis-url]: https://travis-ci.org/mynameislau/clic-clac
+[gzipped-size]: https://img.badgesize.io/mynameislau/clic-clac/master/lib/clic-clac.js?compression=gzip
 [github-release-image]: https://img.shields.io/github/release/mynameislau/clic-clac.svg
 [github-release-url]: https://github.com/mynameislau/clic-clac/releases
 [license-image]: https://img.shields.io/badge/License-MIT-yellow.svg

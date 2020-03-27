@@ -1,5 +1,16 @@
 # Changelog
 
+## v3.0.0 (27/03/2020)
+- [switched to manual init via the "init" functions](https://github.com/mynameislau/clic-clac/commit/38808304c9667abeb3bae763e05714681accd7ac) - @mynameislau
+
+---
+
+## v2.8.0 (26/09/2019)
+- [added remove methods for expand](https://github.com/mynameislau/clic-clac/commit/9d075c46be12808d01021118103b77d0a47422db) - @lafascala
+- [fixed error message](https://github.com/mynameislau/clic-clac/commit/6bca680c5c9d8f4417940d5505a3aa80a7eeaab4) - @lafascala
+
+---
+
 ## v2.7.0 (29/07/2019)
 v2.7.0
 ---
