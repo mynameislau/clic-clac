@@ -12,10 +12,24 @@ http://mynameislau.github.io/clic-clac
 ## HOW TO USE
 
 import `clic-clac` in your main js file (or simply embed it via a `<script>` tag)
+Initiate the behaviors using the `init` method.
+```javascript
+import * as clicClac from 'clic-clac';
+clicClac.init();
+```
+
+or you can init only expand or tablist :
+
+```javascript
+import { expand } from 'clic-clac';
+expand.init('any-dom-selector'); // default is [data-expand]
+```
+
+If you import it via a script tag, the name of the library in the window object is `clicClac`.
 
 ## EXPAND
 
-- Add `data-expand` on the button controlling the expand of an element
+- The init function parameter is a DOM selector targeting the button that toggles an element.
 - `data-controls="idOfTheControlledElement"` tells the lib which element this button is controlling  
   This can be a list of ids separated by spaces.
 - `data-expand-default-state` sets the default aria state of the element
@@ -23,22 +37,21 @@ import `clic-clac` in your main js file (or simply embed it via a `<script>` tag
 
 ## TABLIST
 
-Set a `data-tablist` attribute on the element that will be the tablist,
-the value of the attribute
-is the name of the tablist, you can leave it blank and use
-the id attribute (used to fill the aria-owns attribute later)
+- The init function parameter is a DOM selector targeting the tablist main element.
+
+- The id of the element will be the name of the tablist (used to fill the aria-owns attribute later).
 You can specify if the tablist is multiselectable with the *data-multiselectable* attribute.
 On each tab button, set a `data-tab-for` attribute which value is the id. If your tab button is a link (`<a>`), you can juste specify the id with an anchor link (`href="#xy"`).
 of the controlled tab panel.  
 Set a `data-owner` attribute 
 to specify the tablist that owns the tab.  
 
-Set a `data-expand-default-state` attribtue to true or false if you want
+- Set a `data-expand-default-state` attribtue to true or false if you want
 to specify a default state for this tab
 
-If you don't want at least one tab selected at all times, add a `data-at-least-one` attribute to the tablist element with the value `false`.
+- If you don't want at least one tab selected at all times, add a `data-at-least-one` attribute to the tablist element with the value `false`.
 
-If you want your content to collapse when you click outside of the area, add a `data-click-outside` attribute with the `deselect` value.
+- If you want your content to collapse when you click outside of the area, add a `data-click-outside` attribute with the `deselect` value.
 
 ## EVENTS
 

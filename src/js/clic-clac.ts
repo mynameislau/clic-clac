@@ -8,3 +8,8 @@ import * as tablistInner from './tablist';
 
 export const expand = expandInner;
 export const tablist = tablistInner;
+
+export const init = () => {
+  expand.init();
+  tablist.init();
+};

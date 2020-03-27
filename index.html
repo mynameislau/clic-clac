@@ -68,121 +68,107 @@
 
 <body>
   <div class="container">
-        <h1>Clic-clac</h1>
-        <nav class="nav">
-          <ul>
-            <li>
-              <a href="doc/index.html">Code documentation</a>
-            </li>
-            <li>
-              <a href="http://github.com/mynameislau/clic-clac">Github page</a>
-            </li>
-          </ul>
-        </nav>
-        <section>
-          <h2>Examples</h2>
-          <section>
-            <h3>Expand</h3>
-            <p>Works with various inputs : simple divs, buttons, and links, which are replaced by buttons at runtime.</p>
-            <p>
-              <div class="fake-button" data-expand data-controls="expand-test">Press me(div)</div>
-              <a href="." data-expand data-controls="expand-test">Press me (link)</a>
-              <button data-expand data-controls="expand-test">Press me (button)</button>
-            </p>
-            <p id="expand-test" class="expand-test" data-click-outside="deselect" data-jquery-expand>
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aspernatur assumenda, cumque dolore fugit in, a voluptatibus dicta
-              facilis sequi illo iusto maxime unde ad nihil nostrum adipisci deserunt inventore optio.
-            </p>
-            <hr/>
-            <p>
-              You can expand multiple elements
-              <div>
-                <button data-expand data-controls="firstElement secondElement">Click</button>
-              </div>
-              <div id="firstElement" class="simple-togglable-element">First Element</div>
-              <div id="secondElement" class="simple-togglable-element">Second Element</div>
-            </p>
-            <hr/>
-            <p>
-              It works with <code>dialog</code> tags too.
-            </p>
-            <button data-expand data-controls="expand-test-dialog">Press me to open a dialog</button>
-            <dialog id="expand-test-dialog">
-              <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aspernatur assumenda, cumque dolore fugit in, a voluptatibus dicta
-              facilis sequi illo iusto maxime unde ad nihil nostrum adipisci deserunt inventore optio.</p>
-              <p>
-                <button data-expand data-controls="expand-test-dialog">Close</button>
-              </p>
-            </dialog>
-          </section>
-          <section>
-            <h3>Tablist</h3>
-            <div id="tabs-holder" data-tablist>
-              <nav class="tabs">
-                <ul>
-                  <li>
-                    <a class="nav-link" href="#a-tab" data-tab-for="a-tab" data-owner="tabs-holder">The A tab</a>
-                  </li>
-                  <li>
-                    <a href="#b-tab" class="tab-button" data-tab-for="b-tab" data-owner="tabs-holder" data-expand-default-state="true">The B tab</a>
-                  </li>
-                </ul>
-              </nav>
-              <div class="tab-content" id="a-tab">
-                <h3>Content of the A tab</h3>
-                <p>
-                  Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aspernatur assumenda, cumque dolore fugit in, a voluptatibus dicta
-                  facilis sequi illo iusto maxime unde ad nihil nostrum adipisci deserunt inventore optio.
-                </p>
-              </div>
-              <div class="tab-content" id="b-tab">
-                <h3>Content of the B tab</h3>
-                <p>
-                  Bla
-                </p>
-              </div>
-            </div>
-          </section>
-          <section>
-            <h3>Menu example</h3>
-            <ul id="menu" data-tablist data-at-least-one="false" data-click-outside="deselect">
-              <li>
-                <a href="#first-menu-item" data-owner="menu">First</a>
-                <ul class="tab-content" id="first-menu-item">
-                  <li>one</li>
-                  <li>two</li>
-                  <li>three</li>
-                </ul>
-              </li>
-              <li>
-                <a href="#second-menu-item" data-owner="menu">Second</a>
-                <ul class="tab-content" id="second-menu-item">
-                  <li>one</li>
-                  <li>two</li>
-                  <li>three</li>
-                </ul>
-              </li>
-            </ul>
-        </section>
-      </div>
-  <script>
-    /*for (let i = 0; i < 500; i++) {
-      const truc = document.createElement('div');
-      truc.innerHTML = `
+    <h1>Clic-clac</h1>
+    <nav class="nav">
+      <ul>
+        <li>
+          <a href="doc/index.html">Code documentation</a>
+        </li>
+        <li>
+          <a href="http://github.com/mynameislau/clic-clac">Github page</a>
+        </li>
+      </ul>
+    </nav>
+    <section>
+      <h2>Examples</h2>
+      <section>
+        <h3>Expand</h3>
+        <p>Works with various inputs : simple divs, buttons, and links, which are replaced by buttons at runtime.</p>
         <p>
-          <div class="fake-button" data-expand data-controls="expand-test${i}">Press me(div)</div>
-          <a href="." data-expand data-controls="expand-test${i}">Press me (link)</a>
-          <button data-expand data-controls="expand-test${i}">Press me (button)</button>
+          <div class="fake-button" data-expand data-controls="expand-test">Press me(div)</div>
+          <a href="." data-expand data-controls="expand-test">Press me (link)</a>
+          <button data-expand data-controls="expand-test">Press me (button)</button>
         </p>
-        <p class="expand-test" id="expand-test${i}" data-click-outside="deselect" data-jquery-expand>
+        <p id="expand-test" class="expand-test" data-click-outside="deselect" data-jquery-expand>
           Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aspernatur assumenda, cumque dolore fugit in, a voluptatibus dicta
           facilis sequi illo iusto maxime unde ad nihil nostrum adipisci deserunt inventore optio.
         </p>
-      `;
-      document.body.appendChild(truc);
-    }*/
-  </script>
+        <hr/>
+        <p>
+          You can expand multiple elements
+          <div>
+            <button data-expand data-controls="firstElement secondElement">Click</button>
+          </div>
+          <div id="firstElement" class="simple-togglable-element">First Element</div>
+          <div id="secondElement" class="simple-togglable-element">Second Element</div>
+        </p>
+        <hr/>
+        <p>
+          It works with <code>dialog</code> tags too.
+        </p>
+        <button data-expand data-controls="expand-test-dialog">Press me to open a dialog</button>
+        <dialog id="expand-test-dialog">
+          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aspernatur assumenda, cumque dolore fugit in, a voluptatibus dicta
+          facilis sequi illo iusto maxime unde ad nihil nostrum adipisci deserunt inventore optio.</p>
+          <p>
+            <button data-expand data-controls="expand-test-dialog">Close</button>
+          </p>
+        </dialog>
+      </section>
+      <section>
+        <h3>Tablist</h3>
+        <div id="tabs-holder" data-tablist>
+          <nav class="tabs">
+            <ul>
+              <li>
+                <a class="nav-link" href="#a-tab" data-tab-for="a-tab" data-owner="tabs-holder">The A tab</a>
+              </li>
+              <li>
+                <a href="#b-tab" class="tab-button" data-tab-for="b-tab" data-owner="tabs-holder" data-expand-default-state="true">The B tab</a>
+              </li>
+            </ul>
+          </nav>
+          <div class="tab-content" id="a-tab">
+            <h3>Content of the A tab</h3>
+            <p>
+              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aspernatur assumenda, cumque dolore fugit in, a voluptatibus dicta
+              facilis sequi illo iusto maxime unde ad nihil nostrum adipisci deserunt inventore optio.
+            </p>
+          </div>
+          <div class="tab-content" id="b-tab">
+            <h3>Content of the B tab</h3>
+            <p>
+              Bla
+            </p>
+          </div>
+        </div>
+      </section>
+      <section>
+        <h3>Menu example</h3>
+        <ul id="menu" data-tablist data-at-least-one="false" data-click-outside="deselect">
+          <li>
+            <a href="#first-menu-item" data-owner="menu">First</a>
+            <ul class="tab-content" id="first-menu-item">
+              <li>one</li>
+              <li>two</li>
+              <li>three</li>
+            </ul>
+          </li>
+          <li>
+            <a href="#second-menu-item" data-owner="menu">Second</a>
+            <ul class="tab-content" id="second-menu-item">
+              <li>one</li>
+              <li>two</li>
+              <li>three</li>
+            </ul>
+          </li>
+        </ul>
+    </section>
+  </div>
   <script src="lib/clic-clac.js"></script>
+  <script>
+    window.clicClac.init();
+  </script>
 </body>
 
 </html>

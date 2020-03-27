@@ -76,12 +76,19 @@
 				<a href="#how-to-use" id="how-to-use" style="color: inherit; text-decoration: none;">
 					<h2>HOW TO USE</h2>
 				</a>
-				<p>import <code>clic-clac</code> in your main js file (or simply embed it via a <code>&lt;script&gt;</code> tag)</p>
+				<p>import <code>clic-clac</code> in your main js file (or simply embed it via a <code>&lt;script&gt;</code> tag)
+				Initiate the behaviors using the <code>init</code> method.</p>
+				<pre><code class="language-javascript"><span class="hljs-keyword">import</span> * <span class="hljs-keyword">as</span> clicClac <span class="hljs-keyword">from</span> <span class="hljs-string">'clic-clac'</span>;
+clicClac.init();</code></pre>
+				<p>or you can init only expand or tablist :</p>
+				<pre><code class="language-javascript"><span class="hljs-keyword">import</span> { expand } <span class="hljs-keyword">from</span> <span class="hljs-string">'clic-clac'</span>;
+expand.init(<span class="hljs-string">'any-dom-selector'</span>); <span class="hljs-comment">// default is [data-expand]</span></code></pre>
+				<p>If you import it via a script tag, the name of the library in the window object is <code>clicClac</code>.</p>
 				<a href="#expand" id="expand" style="color: inherit; text-decoration: none;">
 					<h2>EXPAND</h2>
 				</a>
 				<ul>
-					<li>Add <code>data-expand</code> on the button controlling the expand of an element</li>
+					<li>The init function parameter is a DOM selector targeting the button that toggles an element.</li>
 					<li><code>data-controls=&quot;idOfTheControlledElement&quot;</code> tells the lib which element this button is controlling<br>This can be a list of ids separated by spaces.</li>
 					<li><code>data-expand-default-state</code> sets the default aria state of the element</li>
 					<li>If you want your content to collapse when you click outside of the area, add a <code>data-click-outside</code> attribute with   the <code>deselect</code> value to the <strong>controlled</strong> element.</li>
@@ -89,18 +96,23 @@
 				<a href="#tablist" id="tablist" style="color: inherit; text-decoration: none;">
 					<h2>TABLIST</h2>
 				</a>
-				<p>Set a <code>data-tablist</code> attribute on the element that will be the tablist,
-					the value of the attribute
-					is the name of the tablist, you can leave it blank and use
-					the id attribute (used to fill the aria-owns attribute later)
-					You can specify if the tablist is multiselectable with the <em>data-multiselectable</em> attribute.
-					On each tab button, set a <code>data-tab-for</code> attribute which value is the id. If your tab button is a link (<code>&lt;a&gt;</code>), you can juste specify the id with an anchor link (<code>href=&quot;#xy&quot;</code>).
-					of the controlled tab panel.<br>Set a <code>data-owner</code> attribute
-				to specify the tablist that owns the tab.  </p>
-				<p>Set a <code>data-expand-default-state</code> attribtue to true or false if you want
-				to specify a default state for this tab</p>
-				<p>If you don&#39;t want at least one tab selected at all times, add a <code>data-at-least-one</code> attribute to the tablist element with the value <code>false</code>.</p>
-				<p>If you want your content to collapse when you click outside of the area, add a <code>data-click-outside</code> attribute with the <code>deselect</code> value.</p>
+				<ul>
+					<li><p>The init function parameter is a DOM selector targeting the tablist main element.</p>
+					</li>
+					<li><p>The id of the element will be the name of the tablist (used to fill the aria-owns attribute later).
+							You can specify if the tablist is multiselectable with the <em>data-multiselectable</em> attribute.
+							On each tab button, set a <code>data-tab-for</code> attribute which value is the id. If your tab button is a link (<code>&lt;a&gt;</code>), you can juste specify the id with an anchor link (<code>href=&quot;#xy&quot;</code>).
+							of the controlled tab panel.<br>Set a <code>data-owner</code> attribute
+						to specify the tablist that owns the tab.  </p>
+					</li>
+					<li><p>Set a <code>data-expand-default-state</code> attribtue to true or false if you want
+						to specify a default state for this tab</p>
+					</li>
+					<li><p>If you don&#39;t want at least one tab selected at all times, add a <code>data-at-least-one</code> attribute to the tablist element with the value <code>false</code>.</p>
+					</li>
+					<li><p>If you want your content to collapse when you click outside of the area, add a <code>data-click-outside</code> attribute with the <code>deselect</code> value.</p>
+					</li>
+				</ul>
 				<a href="#events" id="events" style="color: inherit; text-decoration: none;">
 					<h2>EVENTS</h2>
 				</a>

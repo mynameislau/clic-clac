@@ -7,7 +7,6 @@ import {
   generateCaughtError,
   switchAElementToButton
 } from './utils';
-import { request } from 'https';
 
 interface ExpandData {
   controllerElements: Element[];
@@ -97,7 +96,7 @@ const deselect = (expandObj: ExpandData) => {
   // preventScrollToAnchor(expandObj);
 };
 
-const keypressEvent =  (event: KeyboardEvent) => {
+const keypressEvent = (event: KeyboardEvent) => {
   if (event.key === ' ' || event.key === 'Enter') {
     sendEventUpward(event);
   }
@@ -107,8 +106,13 @@ const addController = (expandObj: ExpandData, element: Element) => {
   element = switchAElementToButton(element);
 
   expandObj.controllerElements.push(element);
-  const previousAriaControls = element.getAttribute('aria-controls') ? `${element.getAttribute('aria-controls')} ` : '';
-  element.setAttribute('aria-controls', `${previousAriaControls}${expandObj.controlledID}`);
+  const previousAriaControls = element.getAttribute('aria-controls')
+    ? `${element.getAttribute('aria-controls')} `
+    : '';
+  element.setAttribute(
+    'aria-controls',
+    `${previousAriaControls}${expandObj.controlledID}`
+  );
 
   if (element.nodeName !== 'BUTTON') {
     element.setAttribute('role', 'button');
@@ -146,7 +150,10 @@ const sendEventUpward = (event: Event) => {
   event.target.dispatchEvent(clickEvent);
 };
 
-const createExpand = (controllerElement: Element, controlledID: string): ExpandData | null => {
+const createExpand = (
+  controllerElement: Element,
+  controlledID: string
+): ExpandData | null => {
   const controlledElement = window.document.getElementById(controlledID);
 
   if (controlledElement === null) {
@@ -156,12 +163,12 @@ const createExpand = (controllerElement: Element, controlledID: string): ExpandD
     );
   }
 
-  const defaultState
-    = controllerElement.getAttribute('data-expand-default-state') === 'true';
+  const defaultState =
+    controllerElement.getAttribute('data-expand-default-state') === 'true';
   const controlledRole = controlledElement.getAttribute('role');
 
-  const clickOutside
-    = controlledElement.getAttribute('data-click-outside') || '';
+  const clickOutside =
+    controlledElement.getAttribute('data-click-outside') || '';
 
   const expandObj: ExpandData = {
     controllerElements: [],
@@ -194,20 +201,24 @@ window.document.documentElement.addEventListener('click', event => {
   expandObjects.forEach(expandObj => {
     const controllerElem = expandObj.controllerElements.reduce(
       (prev, curr) =>
-        (isOrContains(curr, event.target as Element) ? curr : prev),
+        isOrContains(curr, event.target as Element) ? curr : prev,
       null
     );
-  
+
     if (controllerElem) {
       changeExpandedState(expandObj);
     }
-  
+
     const isControlledElm = isOrContains(
       expandObj.controlledElement,
       event.target as Element
     );
-  
-    if (!controllerElem && !isControlledElm && expandObj.clickOutside === 'deselect') {
+
+    if (
+      !controllerElem &&
+      !isControlledElm &&
+      expandObj.clickOutside === 'deselect'
+    ) {
       deselect(expandObj);
     }
   });
@@ -248,13 +259,15 @@ export const addExpandObject = (newExpand: ExpandData) => {
 
 export const removeExpandController = (controllerElement: Element) => {
   const IDs = getControlledIDS(controllerElement);
-  
+
   IDs.forEach(ID => {
     const expandObj = getExpandObj(ID, expandObjects);
-  
+
     if (expandObj) {
-      expandObj.controllerElements = expandObj.controllerElements.filter(curr => curr !== controllerElement);
-      
+      expandObj.controllerElements = expandObj.controllerElements.filter(
+        curr => curr !== controllerElement
+      );
+
       controllerElement.removeEventListener('keypress', keypressEvent);
       controllerElement.removeAttribute('aria-controls');
       controllerElement.removeAttribute('aria-pressed');
@@ -262,7 +275,7 @@ export const removeExpandController = (controllerElement: Element) => {
         controllerElement.removeAttribute('role');
         controllerElement.removeAttribute('tabindex');
       }
-      
+
       if (expandObj.controllerElements.length === 0) {
         removeExpandObject(expandObj);
       }
@@ -282,7 +295,7 @@ export const addExpand = (controllerElement: Element) => {
 
   IDs.forEach(ID => {
     const expandObj = getExpandObj(ID, expandObjects);
-  
+
     if (expandObj) {
       addController(expandObj, controllerElement);
     } else {
@@ -294,4 +307,6 @@ export const addExpand = (controllerElement: Element) => {
   });
 };
 
-queryAll('[data-expand]').forEach(addExpand);
+export const init = (selector: string = '[data-expand]') => {
+  queryAll(selector).forEach(addExpand);
+};

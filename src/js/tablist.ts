@@ -242,7 +242,8 @@ const initTablist = (tablist: TablistData) => {
   return tablist;
 };
 
-const getTabPanelID = (tabElement: Element) => tabElement.getAttribute('data-tab-for');
+const getTabPanelID = (tabElement: Element) =>
+  tabElement.getAttribute('data-tab-for');
 
 const createTab = (
   tabElement: Element,
@@ -255,7 +256,10 @@ const createTab = (
   const tabPanelID = getTabPanelID(tabElement);
 
   if (tabPanelID === null) {
-    return generateCaughtError('data-tab-for attribute missing or href value is incorrect', null);
+    return generateCaughtError(
+      'data-tab-for attribute missing or href value is incorrect',
+      null
+    );
   }
 
   const tabPanelElement = window.document.getElementById(tabPanelID);
@@ -276,9 +280,7 @@ const createTab = (
 };
 
 const createTablist = (tablistElement: Element): TablistData | null => {
-  const tablistID =
-    tablistElement.getAttribute('data-tablist') ||
-    tablistElement.getAttribute('id');
+  const tablistID = tablistElement.getAttribute('id');
 
   const tabElements = queryAll(`[data-owner="${tablistID}"]`);
   tabElements.forEach(element => {
@@ -291,7 +293,7 @@ const createTablist = (tablistElement: Element): TablistData | null => {
       }
     }
   });
-  
+
   const replacedElements: Element[] = [];
   tabElements.forEach(element => {
     const replaced = switchAElementToButton(element);
@@ -302,17 +304,14 @@ const createTablist = (tablistElement: Element): TablistData | null => {
     return generateCaughtError('tablist id could not be determined', null);
   }
 
-  const tabs = replacedElements.reduce(
-    (acc, tabElement, index) => {
-      const maybeTab = createTab(tabElement, tablistID, index);
-      if (maybeTab === null) {
-        return acc;
-      } else {
-        return [...acc, maybeTab];
-      }
-    },
-    [] as TabData[]
-  );
+  const tabs = replacedElements.reduce((acc, tabElement, index) => {
+    const maybeTab = createTab(tabElement, tablistID, index);
+    if (maybeTab === null) {
+      return acc;
+    } else {
+      return [...acc, maybeTab];
+    }
+  }, [] as TabData[]);
 
   return {
     tablistID,
@@ -374,4 +373,6 @@ export const setMultiselectable = (tablistID: string, multi: boolean) => {
   refreshTabList(tablist);
 };
 
-queryAll('[data-tablist]').forEach(addTablist);
+export const init = (selector: string = '[data-tablist]') => {
+  queryAll(selector).forEach(addTablist);
+};
