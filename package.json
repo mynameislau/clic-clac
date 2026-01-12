@@ -32,7 +32,7 @@
     "uglifyjs-webpack-plugin": "1.2.2",
     "webpack": "^4.42.1",
     "webpack-cli": "2.0.9",
-    "webpack-dev-server": "3.1.11"
+    "webpack-dev-server": "5.2.2"
   },
   "jest": {
     "preset": "jest-puppeteer-preset",
